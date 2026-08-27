@@ -2,7 +2,7 @@
 
 Personal profile site for [srikanthbellary.com](https://srikanthbellary.com) and [srikanthbellary.github.io](https://srikanthbellary.github.io).
 
-First-person profile of a principal: Sr. Gen AI Solution Architect / Forward Deployment Engineer. It is not a company brochure.
+First-person 2026 resume: dates, client names, and project detail. It is not a capabilities brochure. The client-project chapters are the main scroll; a right-hand chronometer tracks them.
 
 ## Theme C
 
