@@ -1,4 +1,34 @@
-import { allowedOrigin, loadSystemPrompt, validateMessages } from "./api/chat.ts";
+import handler, { allowedOrigin, loadSystemPrompt, validateMessages } from "./api/chat.ts";
+
+type FakeRes = {
+  code: number;
+  body: unknown;
+  headers: Record<string, string>;
+  setHeader: (name: string, value: string) => void;
+  status: (code: number) => FakeRes;
+  json: (body: unknown) => void;
+  end: () => void;
+};
+
+function fakeRes(): FakeRes {
+  const res: FakeRes = {
+    code: 0,
+    body: null,
+    headers: {},
+    setHeader(name, value) {
+      res.headers[name] = value;
+    },
+    status(code) {
+      res.code = code;
+      return res;
+    },
+    json(body) {
+      res.body = body;
+    },
+    end() {},
+  };
+  return res;
+}
 
 const cases: [string, boolean][] = [
   ["https://srikanthbellary.com", true],
@@ -51,6 +81,49 @@ if (!prompt.includes("Wellington, FL")) {
 if (prompt.includes("NOVITA") || /sk-[a-zA-Z0-9]{10,}/.test(prompt)) {
   failed += 1;
   console.error("prompt files must not contain keys");
+}
+
+delete process.env.NOVITA_API_KEY;
+
+const rejected = fakeRes();
+await handler(
+  {
+    method: "POST",
+    headers: { origin: "https://evil.example" },
+    body: { messages: [{ role: "user", content: "Hi" }] },
+  },
+  rejected,
+);
+if (rejected.code !== 403) {
+  failed += 1;
+  console.error(`expected 403 for foreign origin, got ${rejected.code}`);
+}
+
+const preflight = fakeRes();
+await handler(
+  {
+    method: "OPTIONS",
+    headers: { origin: "https://srikanthbellary.com" },
+  },
+  preflight,
+);
+if (preflight.code !== 204 || preflight.headers["Access-Control-Allow-Origin"] !== "https://srikanthbellary.com") {
+  failed += 1;
+  console.error("preflight failed", preflight);
+}
+
+const unconfigured = fakeRes();
+await handler(
+  {
+    method: "POST",
+    headers: { origin: "http://localhost:3000" },
+    body: { messages: [{ role: "user", content: "What do you build?" }] },
+  },
+  unconfigured,
+);
+if (unconfigured.code !== 503) {
+  failed += 1;
+  console.error(`expected 503 without key, got ${unconfigured.code}`, unconfigured.body);
 }
 
 if (failed) {

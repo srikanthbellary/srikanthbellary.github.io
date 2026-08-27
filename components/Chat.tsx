@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type FormEvent,
-  type KeyboardEvent,
-} from "react";
+import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from "react";
 
 type Role = "user" | "assistant";
 type Turn = { role: Role; content: string };
@@ -50,7 +43,7 @@ export function Chat() {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (event: KeyboardEvent) => {
+    const onKey = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
@@ -103,7 +96,7 @@ export function Chat() {
     void send();
   }
 
-  function onFieldKey(event: KeyboardEvent<HTMLTextAreaElement>) {
+  function onFieldKey(event: ReactKeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       void send();
