@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "functions": {
+    "api/chat.ts": {
+      "runtime": "nodejs",
+      "maxDuration": 30,
+      "includeFiles": "prompt/**/*.md"
+    }
+  }
+}

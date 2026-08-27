@@ -13,6 +13,7 @@ const skipDirs = new Set([
   "out",
   ".next",
   "public/fonts",
+  "chat-api",
 ]);
 
 const skipFiles = new Set(["package-lock.json", "scripts/check-forbidden.mjs"]);

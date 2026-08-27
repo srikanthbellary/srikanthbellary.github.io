@@ -4,6 +4,7 @@ import { Capabilities } from "@/components/Capabilities";
 import { SelectedWork } from "@/components/SelectedWork";
 import { Projects } from "@/components/Projects";
 import { Contact } from "@/components/Contact";
+import { Chat } from "@/components/Chat";
 
 export default function Page() {
   return (
@@ -19,6 +20,7 @@ export default function Page() {
         <Projects />
       </main>
       <Contact />
+      <Chat />
     </>
   );
 }
