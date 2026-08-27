@@ -1,6 +1,7 @@
 {
   "name": "srikanthbellary-chat-api",
   "private": true,
+  "type": "module",
   "description": "Serverless chat for srikanthbellary.com. Deploy this directory as its own Vercel project.",
   "engines": {
     "node": ">=20"
