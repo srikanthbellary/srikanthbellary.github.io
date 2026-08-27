@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 export const config = {
-  runtime: "nodejs",
+  runtime: "nodejs20.x",
   maxDuration: 30,
   includeFiles: "prompt/**/*.md",
 };
