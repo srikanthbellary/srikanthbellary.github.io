@@ -3,7 +3,7 @@
   "framework": null,
   "functions": {
     "api/chat.ts": {
-      "runtime": "nodejs",
+      "runtime": "nodejs20.x",
       "maxDuration": 30,
       "includeFiles": "prompt/**/*.md"
     }
