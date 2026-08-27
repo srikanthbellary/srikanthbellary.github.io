@@ -321,14 +321,14 @@ function ChangePlate() {
         strokeDasharray="3 5"
         className="pulse"
       />
-      {[
+      {([
         [240, 176, "IHDP", true],
         [140, 100, "837", false],
         [340, 100, "835", false],
         [120, 220, "CLIN", false],
         [360, 220, "OPS", false],
         [240, 268, "GLUE", true],
-      ].map(([x, y, label, dark]) => (
+      ] as const).map(([x, y, label, dark]) => (
         <g key={String(label)}>
           <circle
             cx={x}
