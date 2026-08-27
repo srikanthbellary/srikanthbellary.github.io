@@ -5,9 +5,9 @@ import { person } from "@/lib/content";
 import { Monogram } from "./Monogram";
 
 const links = [
-  { href: "#work", id: "work", label: "Work" },
-  { href: "#selected", id: "selected", label: "Selected" },
-  { href: "#projects", id: "projects", label: "Projects" },
+  { href: "#skills", id: "skills", label: "Skills" },
+  { href: "#projects", id: "projects", label: "Built" },
+  { href: "#career", id: "career", label: "Career" },
   { href: "#contact", id: "contact", label: "Contact" },
 ] as const;
 

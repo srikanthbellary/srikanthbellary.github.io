@@ -10,7 +10,7 @@ const HISTORY_CAP = 8;
 const MAX_CHARS = 800;
 
 const PREFACE =
-  "I can speak to the work on this page — agents, retrieval, data, and the names I have worked under.";
+  "I can speak to the work on this page — the career chapters, the stack, and the things I built under my own name.";
 const DISCONNECTED = "chat is not connected yet";
 const DOWN = "The desk is quiet. Try again shortly, or write me.";
 const BUSY_NOTE = "A moment — I am still writing.";

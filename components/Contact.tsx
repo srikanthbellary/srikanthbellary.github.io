@@ -9,11 +9,11 @@ export function Contact() {
           <span>{person.location}</span>
         </div>
         <h2 className="chapter-title">
-          If the work has to run, <em>write me.</em>
+          Write me <em>directly.</em>
         </h2>
         <p>
-          I take the hard one: the agent that must finish, the retrieval that
-          must refuse, the estate that has never agreed on a schema.
+          I am in Wellington, Florida. Email is the surest path. The record
+          above is the work I can discuss.
         </p>
         <dl className="contact-grid">
           <div>

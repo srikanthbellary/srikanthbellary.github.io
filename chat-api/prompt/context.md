@@ -13,7 +13,7 @@
 - GitHub: https://github.com/srikanthbellary
 - Medium: https://medium.com/@srikanthbellary01
 
-I build production GenAI — agents, retrieval, and data — that has to run. This page is my personal profile. When the work is a firm engagement rather than a staffed role, I run it through Sunrise Gen AI. That site is the practice. This page is mine.
+I have spent 15+ years in production systems. This page is my personal profile — a 2026 resume, not a capabilities brochure. When the work is a firm engagement rather than a staffed role, I run it through Sunrise Gen AI. That site is the practice. This page is mine.
 
 # Skills
 
@@ -31,65 +31,71 @@ Compact stack used on the work above (not a complete inventory):
 
 # Career
 
-Staffed and engaged work. Clients I may name: Verizon, Circana, Thermo Fisher, CVS, Change Healthcare, Cars.com, McDonald's, Northern Trust, KeyBank, Wells Fargo, Prudential, CareerBuilder. Staffing firms appear only as "via".
+Staffed and engaged work, newest first. Staffing firms appear only as "via".
 
 ## Verizon via Cognizant — Mar 2025–present
 
-SRE multi-agent incident intelligence. I put agents on telemetry, tickets, runbooks, and the service call graph, then keep a person on the last step. MCP-guided remediation with evidence attached. RAG over those sources. OpenSearch in the stack.
+Sr. Gen AI Agentic Architect. SRE multi-agent incident intelligence. I put agents on telemetry, tickets, runbooks, and the service call graph, then keep a person on the last step. RAG from tickets. MCP-guided remediation with evidence. OpenSearch, Lambda, EventBridge.
+
+Agents I shipped: SRE Recommendation, Remediation Insights MCP, Auto Failover, Correction of Errors, Confluence.
 
 Allowed numbers: failure detection under six seconds; about 80% less manual dashboard watching; 15 MCP tools / 20 REST endpoints.
 
-## Circana via Interas — Apr 2024–Mar 2025
+## Circana via Interas Labs — Apr 2024–Mar 2025
 
-Retail schema and attribute mapping with confidence scoring and a review queue. Vertex on GCP.
+Sr. AI/ML Advisor / Product Owner. Retail schema and attribute mapping with confidence scoring and a review queue. Vertex on GCP. 1400+ categories / 30K+ attributes.
 
-Allowed numbers: up to 60% less time on mapping work; 3× throughput on attribute mapping; 1400+ categories / 30K+ attributes.
+Allowed numbers: up to 60% less time on mapping work; 3× throughput on attribute mapping.
 
 Do not cite any other mapping percentage.
 
-## Thermo Fisher via Persistent — May 2023–Apr 2024
+## Thermo Fisher via Persistent — May 2023–Apr 2024 — Pittsburgh
 
-Mainframe-to-Azure extracts. VSAM / ISAM sources. COBOL-to-SQL. Lineage preserved on the move.
+Mainframe-to-Azure extracts. VSAM / ISAM sources. COBOL-to-SQL. IDA. Reconciliation with lineage preserved.
 
-## CVS — Aug 2019–Apr 2023
+## CVS Health — Aug 2019–Apr 2023 — Woonsocket
 
-RPhAI: pharmacy-claims machine learning for pharmacy workflow. OCR and NER on documents in that program.
+Data engineering lead on RPhAI: pharmacy-claims machine learning for pharmacy workflow. OCR and NER. GCP / Azure, Snowflake, Kafka.
 
-## Change Healthcare — 2017–2019
+## Change Healthcare — Aug 2017–Aug 2019 — Chicago
 
-Intelligent Healthcare Data Platform (IHDP). Combined healthcare, financial, clinical, and operational data. EDI 837 / 835. Graph work on Neo4j / Neptune.
+Intelligent Healthcare Data Platform (IHDP). Combined healthcare, financial, clinical, and operational data. EDI 837 / 835. Graph work on Neo4j / Neptune. Glue.
 
-## Cars.com — 2017
+## Cars.com — Mar 2017–Aug 2017 — Chicago
 
-Production ML pipelines in Spark (Scala and Python), CI/CD for periodic training, feature-engineered training sets.
+Production Spark ML pipelines in Scala and Python. Ensembles. CI/CD for periodic training. Feature-engineered training sets.
 
-## McDonald's via Sapient — 2016–2017
+## McDonald's via Sapient Razorfish — Nov 2016–Mar 2017 — Chicago
 
-Staffed through Sapient. Enterprise cloud migration and automation; big-data track on a move from monolithic toward services.
+Strategic enablement for enterprise cloud migration. Global data lake. Capability Maturity Model (CMM) for the customer and global data platforms.
 
-## Northern Trust — 2015–2016
+## Northern Trust — Apr 2015–Nov 2016 — Chicago
 
-Derivatives data work; enterprise data-exchange upgrade toward ISO 20022. Hadoop integration; pipelines from a production CDH cluster into a central S3 data lake.
+Derivatives data work; enterprise data-exchange upgrade toward ISO 20022. Pipelines from a production CDH cluster into a central S3 data lake.
 
-## KeyBank — 2014–2015
+## KeyBank — Sep 2014–Apr 2015 — Cleveland
 
-Shared Foundation Data program. Cloudera cluster work. Spark pipelines in Python and Scala.
+Shared Foundation Data program. Cloudera Manager for staging and test. Spark pipelines in Python and Scala.
 
-## Wells Fargo — 2013–2014
+## Wells Fargo — 2013–2014 — Des Moines
 
-Home-loan data migration onto a mortgage servicing platform. Web services consumed by Java, .NET, and mobile clients.
+Home-loan data migration onto a mortgage servicing platform. 50+ web services consumed by Java, .NET, and mobile clients.
 
-## Prudential — 2011–2013
+## Prudential — 2011–2013 — Shelton, CT
 
 BI reporting and ETL around a policy administration platform.
 
-## Cognizant — 2009–2011
+## Cognizant — 2009–2011 — Minneapolis
 
 Data-warehouse work (Kimball / star schema).
 
-## CareerBuilder — 2008–2009
+## CareerBuilder — 2008–2009 — Reston
 
 ETL mappings, SQL procedures, and transformation logic.
+
+## UIA R&D — 2006–2007 — Hyderabad
+
+Early ETL. Requirements through delivery with business stakeholders.
 
 # Projects I may name
 
@@ -111,17 +117,17 @@ The firm I run, for firm engagements. https://sunrisegenai.com
 
 ## Agentic systems
 
-I write workflow-specific harnesses — not a generic chatbot — in front of an in-network model gateway. Agents gather, act, and verify. A test gate sits in front of done. A coding agent I built is a single-file Python program, about 1,100 lines, standard library only: file operations, atomic multi-edit, diff preview, git, memory, skill packs, and session save and resume.
+I write workflow-specific harnesses — not a generic chatbot — in front of an in-network model gateway. Agents gather, act, and verify. A test gate sits in front of done. A coding agent I built is a single-file Python program, about 1,100 lines, standard library only.
 
 A 12-step LLM pipeline rewrites a Java / Spring service in about 2.5 minutes against about 7.5 hours by hand.
 
 ## RAG
 
-Grounded retrieval so an answer carries a citation, and a refusal when the source will not support it. Context graphs and Graph Architecture hold relationships. Evaluation harnesses are product surface.
+Grounded retrieval so an answer carries a citation, and a refusal when the source will not support it.
 
 ## Regulated GxP quality
 
-118 externalized SQL detection rules against a 432-table warehouse. SHA-256 hash-locked, fail-closed, UUID5 idempotency. GAMP Category 5 validation writing as a capability: URS, system specification, architecture, and configuration — not a product case study.
+118 externalized SQL detection rules against a 432-table warehouse. SHA-256 hash-locked, fail-closed, UUID5 idempotency. GAMP Category 5 validation writing as a capability.
 
 ## Mapping
 
@@ -129,11 +135,7 @@ Pipelines that propose, score, and explain schema and attribute maps, with a rev
 
 ## Developer platforms
 
-AST inventory of a Java / Spring estate: 63 services, 236 controllers, 506 REST endpoints. Static-analysis Graph Architecture into Neo4j with 88.9% edge resolution, used for blast-radius, migration scoping, and security review. 15 MCP tools / 20 REST endpoints. The ~1,100-line stdlib coding agent above.
-
-## Reliability, RBAC, multi-cloud
-
-Incident intelligence with a human on the last step. Serving-layer RBAC. Lakes, lineage-preserving extracts, and production serving on AWS, Azure, and Google Cloud.
+AST inventory of a Java / Spring estate: 63 services, 236 controllers, 506 REST endpoints. Static-analysis Graph Architecture into Neo4j with 88.9% edge resolution.
 
 # Allowed numbers — do not invent others
 

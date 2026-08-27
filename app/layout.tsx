@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s — Srikanth Bellary",
   },
   description:
-    "Personal profile. I build production GenAI — agents, retrieval, and data — that has to run. Wellington, FL.",
+    "2026 profile. Sr. Gen AI Solution Architect / Forward Deployment. 15+ years. Wellington, FL. GCP PDE. MS Software Engineering.",
   applicationName: "Srikanth Bellary",
   authors: [{ name: person.name, url: person.site }],
   creator: person.name,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Srikanth Bellary",
     title: "Srikanth Bellary — Sr. Gen AI Solution Architect",
     description:
-      "I build production GenAI — agents, retrieval, and data — that has to run.",
+      "Sr. Gen AI Solution Architect / Forward Deployment. 15+ years. Wellington, FL.",
     firstName: "Srikanth",
     lastName: "Bellary",
   },
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Srikanth Bellary",
     description:
-      "Sr. Gen AI Solution Architect / Forward Deployment. Production agents, retrieval, and data.",
+      "Sr. Gen AI Solution Architect / Forward Deployment. Wellington, FL.",
   },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
