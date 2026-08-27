@@ -1,0 +1,134 @@
+import handler, { allowedOrigin, loadSystemPrompt, validateMessages } from "./api/chat.ts";
+
+type FakeRes = {
+  code: number;
+  body: unknown;
+  headers: Record<string, string>;
+  setHeader: (name: string, value: string) => void;
+  status: (code: number) => FakeRes;
+  json: (body: unknown) => void;
+  end: () => void;
+};
+
+function fakeRes(): FakeRes {
+  const res: FakeRes = {
+    code: 0,
+    body: null,
+    headers: {},
+    setHeader(name, value) {
+      res.headers[name] = value;
+    },
+    status(code) {
+      res.code = code;
+      return res;
+    },
+    json(body) {
+      res.body = body;
+    },
+    end() {},
+  };
+  return res;
+}
+
+const cases: [string, boolean][] = [
+  ["https://srikanthbellary.com", true],
+  ["https://www.srikanthbellary.com", true],
+  ["https://srikanthbellary.github.io", true],
+  ["http://127.0.0.1:3456", true],
+  ["http://localhost:3456", true],
+  ["http://localhost:3000", true],
+  ["https://evil.example", false],
+  ["http://localhost:8080", false],
+];
+
+let failed = 0;
+
+for (const [origin, expect] of cases) {
+  const got = allowedOrigin(origin);
+  if (got !== expect) {
+    failed += 1;
+    console.error(`origin ${origin}: expected ${expect}, got ${got}`);
+  }
+}
+
+const tooLong = "x".repeat(801);
+const checks: [string, unknown, boolean][] = [
+  ["ok pair", { messages: [{ role: "user", content: "What do you build?" }] }, true],
+  ["empty", { messages: [] }, false],
+  ["too many", { messages: Array.from({ length: 9 }, () => ({ role: "user", content: "hi" })) }, false],
+  ["long user", { messages: [{ role: "user", content: tooLong }] }, false],
+  ["last assistant", { messages: [{ role: "assistant", content: "Hello." }] }, false],
+];
+
+for (const [label, body, ok] of checks) {
+  const result = validateMessages(body);
+  const passed = ok ? Array.isArray(result) : typeof result === "string";
+  if (!passed) {
+    failed += 1;
+    console.error(`validate ${label}: unexpected`, result);
+  }
+}
+
+const prompt = loadSystemPrompt();
+if (!prompt.includes("I only answer questions about Srikanth Bellary's work and profile.")) {
+  failed += 1;
+  console.error("system prompt was not loaded");
+}
+if (!prompt.includes("Wellington, FL")) {
+  failed += 1;
+  console.error("context prompt was not concatenated");
+}
+if (prompt.includes("NOVITA") || /sk-[a-zA-Z0-9]{10,}/.test(prompt)) {
+  failed += 1;
+  console.error("prompt files must not contain keys");
+}
+
+delete process.env.NOVITA_API_KEY;
+
+const rejected = fakeRes();
+await handler(
+  {
+    method: "POST",
+    headers: { origin: "https://evil.example" },
+    body: { messages: [{ role: "user", content: "Hi" }] },
+  },
+  rejected,
+);
+if (rejected.code !== 403) {
+  failed += 1;
+  console.error(`expected 403 for foreign origin, got ${rejected.code}`);
+}
+
+const preflight = fakeRes();
+await handler(
+  {
+    method: "OPTIONS",
+    headers: { origin: "https://srikanthbellary.com" },
+  },
+  preflight,
+);
+if (preflight.code !== 204 || preflight.headers["Access-Control-Allow-Origin"] !== "https://srikanthbellary.com") {
+  failed += 1;
+  console.error("preflight failed", preflight);
+}
+
+const unconfigured = fakeRes();
+await handler(
+  {
+    method: "POST",
+    headers: { origin: "http://localhost:3000" },
+    body: { messages: [{ role: "user", content: "What do you build?" }] },
+  },
+  unconfigured,
+);
+if (unconfigured.code !== 503) {
+  failed += 1;
+  console.error(`expected 503 without key, got ${unconfigured.code}`, unconfigured.body);
+}
+
+if (failed) {
+  console.error(`Guard check failed (${failed}).`);
+  process.exit(1);
+}
+
+console.log("Guard check passed.");

@@ -30,6 +30,20 @@ npm run build
 
 Repo settings: Pages → Source → GitHub Actions.
 
+The static export talks to chat only through `NEXT_PUBLIC_CHAT_API_URL` (the public URL of the Vercel function). If that variable is unset, the widget still renders and says the chat is not connected yet.
+
+To wire it after the function is deployed, set the GitHub Actions variable `NEXT_PUBLIC_CHAT_API_URL` to that URL (for example `https://example.vercel.app/api/chat`).
+
+## Chat function
+
+`chat-api/` is a separate Node project. Deploy that directory as its own Vercel project (Root Directory: `chat-api`). Do not add App Router API routes to this Next site.
+
+On the Vercel project, set the environment variable named `NOVITA_API_KEY`. Do not put a key, token, or secret in this repository.
+
+```bash
+npm run check:chat
+```
+
 ## Voice check
 
 `npm run check:voice` fails the build if forbidden names or invented company-site metrics appear in the source.
