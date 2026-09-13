@@ -5,10 +5,10 @@ import { person } from "@/lib/content";
 import { Monogram } from "./Monogram";
 
 const links = [
-  { href: "#skills", id: "skills", label: "Skills" },
-  { href: "#projects", id: "projects", label: "Built" },
-  { href: "#career", id: "career", label: "Career" },
-  { href: "#contact", id: "contact", label: "Contact" },
+  { href: "/#skills", id: "skills", label: "Skills" },
+  { href: "/#projects", id: "projects", label: "Built" },
+  { href: "/#career", id: "career", label: "Career" },
+  { href: "/#contact", id: "contact", label: "Contact" },
 ] as const;
 
 export function Nav() {
@@ -37,7 +37,7 @@ export function Nav() {
   return (
     <header className="nav">
       <div className="wrap nav-inner">
-        <a className="wordmark" href="#fold">
+        <a className="wordmark" href="/">
           <Monogram className="mono" />
           <span className="wordmark-name">{person.name}</span>
         </a>

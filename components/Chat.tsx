@@ -14,6 +14,7 @@ const PREFACE =
 const DISCONNECTED = "chat is not connected yet";
 const DOWN = "The desk is quiet. Try again shortly, or write me.";
 const BUSY_NOTE = "A moment — I am still writing.";
+const PRIVACY_NOTE = "Questions you send are used to write a reply.";
 
 function lastTurns(turns: Turn[]): Turn[] {
   return turns.slice(-HISTORY_CAP);
@@ -135,7 +136,11 @@ export function Chat() {
               </p>
             ))}
             {busy ? <p className="chat-note">{BUSY_NOTE}</p> : null}
-            {error ? <p className="chat-err">{error}</p> : null}
+            {error ? (
+              <p className="chat-err" id={`${panelId}-err`} role="alert">
+                {error}
+              </p>
+            ) : null}
           </div>
           <form className="chat-compose" onSubmit={onSubmit}>
             <label className="chat-sr" htmlFor={`${panelId}-field`}>
@@ -151,6 +156,8 @@ export function Chat() {
               onKeyDown={onFieldKey}
               placeholder={connected ? "A question about the work." : DISCONNECTED}
               disabled={!connected || busy}
+              aria-invalid={Boolean(error)}
+              aria-describedby={error ? `${panelId}-err` : undefined}
             />
             <button
               type="submit"
@@ -159,6 +166,10 @@ export function Chat() {
             >
               Send
             </button>
+            <p className="chat-privacy">
+              {PRIVACY_NOTE}{" "}
+              <a href="/privacy/">Privacy</a>
+            </p>
           </form>
         </section>
       ) : null}

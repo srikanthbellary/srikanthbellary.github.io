@@ -10,5 +10,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: "https://srikanthbellary.com/privacy/",
+      lastModified: new Date("2026-09-13"),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 }
