@@ -1,4 +1,9 @@
-import handler, { allowedOrigin, loadSystemPrompt, validateMessages } from "./api/chat.ts";
+import handler, {
+  allowedOrigin,
+  loadSystemPrompt,
+  promptPackForOrigin,
+  validateMessages,
+} from "./api/chat.ts";
 
 type FakeRes = {
   code: number;
@@ -37,6 +42,8 @@ const cases: [string, boolean][] = [
   ["http://127.0.0.1:3456", true],
   ["http://localhost:3456", true],
   ["http://localhost:3000", true],
+  ["https://sunrisegenai.com", true],
+  ["https://www.sunrisegenai.com", true],
   ["https://evil.example", false],
   ["http://localhost:8080", false],
 ];
@@ -69,18 +76,84 @@ for (const [label, body, ok] of checks) {
   }
 }
 
-const prompt = loadSystemPrompt();
-if (!prompt.includes("I only answer questions about Srikanth Bellary's work and profile.")) {
-  failed += 1;
-  console.error("system prompt was not loaded");
+const packCases: [string, "profile" | "sunrise"][] = [
+  ["https://srikanthbellary.com", "profile"],
+  ["https://www.srikanthbellary.com", "profile"],
+  ["https://srikanthbellary.github.io", "profile"],
+  ["http://127.0.0.1:3456", "profile"],
+  ["http://localhost:3456", "profile"],
+  ["http://localhost:3000", "profile"],
+  ["https://sunrisegenai.com", "sunrise"],
+  ["https://www.sunrisegenai.com", "sunrise"],
+  ["", "profile"],
+];
+
+for (const [origin, expect] of packCases) {
+  const got = promptPackForOrigin(origin);
+  if (got !== expect) {
+    failed += 1;
+    console.error(`pack ${origin || "(empty)"}: expected ${expect}, got ${got}`);
+  }
 }
-if (!prompt.includes("Wellington, FL")) {
+
+const profile = loadSystemPrompt("https://srikanthbellary.com");
+if (!profile.includes("I only answer questions about Srikanth Bellary's work and profile.")) {
   failed += 1;
-  console.error("context prompt was not concatenated");
+  console.error("profile system prompt was not loaded");
 }
-if (prompt.includes("NOVITA") || /sk-[a-zA-Z0-9]{10,}/.test(prompt)) {
+if (!profile.includes("Wellington, FL")) {
   failed += 1;
-  console.error("prompt files must not contain keys");
+  console.error("profile context prompt was not concatenated");
+}
+if (profile.includes("We only answer questions about what Sunrise Gen AI builds.")) {
+  failed += 1;
+  console.error("profile pack leaked the firm voice");
+}
+if (profile.includes("NOVITA") || /sk-[a-zA-Z0-9]{10,}/.test(profile)) {
+  failed += 1;
+  console.error("profile prompt files must not contain keys");
+}
+
+const localhostProfile = loadSystemPrompt("http://localhost:3000");
+if (localhostProfile !== profile || loadSystemPrompt() !== profile) {
+  failed += 1;
+  console.error("localhost and default load must keep the profile pack");
+}
+
+const sunrise = loadSystemPrompt("https://sunrisegenai.com");
+if (!sunrise.includes("We only answer questions about what Sunrise Gen AI builds.")) {
+  failed += 1;
+  console.error("sunrise system prompt was not loaded");
+}
+if (!sunrise.includes("West Palm Beach, FL")) {
+  failed += 1;
+  console.error("sunrise context prompt was not concatenated");
+}
+if (sunrise.includes("I only answer questions about Srikanth Bellary's work and profile.")) {
+  failed += 1;
+  console.error("sunrise pack leaked the profile voice");
+}
+if (sunrise.includes("Wellington")) {
+  failed += 1;
+  console.error("sunrise pack must not contain Wellington");
+}
+if (/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(sunrise)) {
+  failed += 1;
+  console.error("sunrise pack must not contain a mailbox");
+}
+if (/\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b/.test(sunrise)) {
+  failed += 1;
+  console.error("sunrise pack must not contain a phone");
+}
+if (sunrise.includes("NOVITA") || /sk-[a-zA-Z0-9]{10,}/.test(sunrise)) {
+  failed += 1;
+  console.error("sunrise prompt files must not contain keys");
+}
+
+const profileAgain = loadSystemPrompt("https://www.srikanthbellary.com");
+if (profileAgain !== profile || profileAgain === sunrise) {
+  failed += 1;
+  console.error("prompt cache leaked across packs");
 }
 
 delete process.env.NOVITA_API_KEY;
@@ -110,6 +183,22 @@ await handler(
 if (preflight.code !== 204 || preflight.headers["Access-Control-Allow-Origin"] !== "https://srikanthbellary.com") {
   failed += 1;
   console.error("preflight failed", preflight);
+}
+
+const sunrisePreflight = fakeRes();
+await handler(
+  {
+    method: "OPTIONS",
+    headers: { origin: "https://sunrisegenai.com" },
+  },
+  sunrisePreflight,
+);
+if (
+  sunrisePreflight.code !== 204 ||
+  sunrisePreflight.headers["Access-Control-Allow-Origin"] !== "https://sunrisegenai.com"
+) {
+  failed += 1;
+  console.error("sunrise preflight failed", sunrisePreflight);
 }
 
 const unconfigured = fakeRes();

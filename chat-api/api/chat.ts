@@ -6,7 +6,7 @@ export const config = {
   includeFiles: "prompt/**/*.md",
 };
 
-const ALLOWED_ORIGINS = new Set([
+const PROFILE_ORIGINS = new Set([
   "https://srikanthbellary.com",
   "https://www.srikanthbellary.com",
   "https://srikanthbellary.github.io",
@@ -14,6 +14,15 @@ const ALLOWED_ORIGINS = new Set([
   "http://localhost:3456",
   "http://localhost:3000",
 ]);
+
+const SUNRISE_ORIGINS = new Set([
+  "https://sunrisegenai.com",
+  "https://www.sunrisegenai.com",
+]);
+
+const ALLOWED_ORIGINS = new Set([...PROFILE_ORIGINS, ...SUNRISE_ORIGINS]);
+
+export type PromptPack = "profile" | "sunrise";
 
 const NOVITA_URL = "https://api.novita.ai/openai/v1/chat/completions";
 const MODEL = "meta-llama/llama-3.1-8b-instruct";
@@ -40,7 +49,7 @@ type NodeRes = {
 };
 
 const buckets = new Map<string, number[]>();
-let promptCache: string | null = null;
+const promptCache = new Map<PromptPack, string>();
 
 function header(req: NodeReq, name: string): string {
   const raw = req.headers[name] ?? req.headers[name.toLowerCase()];
@@ -50,6 +59,11 @@ function header(req: NodeReq, name: string): string {
 
 export function allowedOrigin(origin: string): boolean {
   return ALLOWED_ORIGINS.has(origin);
+}
+
+export function promptPackForOrigin(origin: string): PromptPack {
+  if (SUNRISE_ORIGINS.has(origin)) return "sunrise";
+  return "profile";
 }
 
 export function clientIp(req: NodeReq): string {
@@ -95,14 +109,15 @@ export function validateMessages(input: unknown): ChatMessage[] | string {
   return out;
 }
 
-function promptDir(): string {
+function promptDir(pack: PromptPack): string {
   const here = typeof __dirname === "string" ? __dirname : "";
-  const candidates = [
+  const roots = [
     join(process.cwd(), "prompt"),
     join(process.cwd(), "chat-api", "prompt"),
     here ? join(here, "..", "prompt") : "",
     here ? join(here, "..", "..", "prompt") : "",
   ].filter(Boolean);
+  const candidates = pack === "sunrise" ? roots.map((root) => join(root, "sunrise")) : roots;
 
   for (const dir of candidates) {
     if (existsSync(join(dir, "system.md")) && existsSync(join(dir, "context.md"))) {
@@ -112,13 +127,16 @@ function promptDir(): string {
   throw new Error("Prompt files are missing.");
 }
 
-export function loadSystemPrompt(): string {
-  if (promptCache) return promptCache;
-  const dir = promptDir();
+export function loadSystemPrompt(origin = ""): string {
+  const pack = promptPackForOrigin(origin);
+  const cached = promptCache.get(pack);
+  if (cached) return cached;
+  const dir = promptDir(pack);
   const system = readFileSync(join(dir, "system.md"), "utf8").trim();
   const context = readFileSync(join(dir, "context.md"), "utf8").trim();
-  promptCache = `${system}\n\n---\n\n${context}`;
-  return promptCache;
+  const combined = `${system}\n\n---\n\n${context}`;
+  promptCache.set(pack, combined);
+  return combined;
 }
 
 function applyCors(res: NodeRes, origin: string | null) {
@@ -190,7 +208,7 @@ export default async function handler(req: NodeReq, res: NodeRes) {
 
   let system: string;
   try {
-    system = loadSystemPrompt();
+    system = loadSystemPrompt(origin);
   } catch {
     json(res, corsOrigin, 500, { error: "Prompt files are missing." });
     return;
