@@ -1,4 +1,8 @@
+import type { Metadata } from "next";
 import { person } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata("missing");
 
 export default function NotFound() {
   return (

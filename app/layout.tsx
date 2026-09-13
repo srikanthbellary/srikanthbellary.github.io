@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { person } from "@/lib/content";
+import { ogImage, pageCopy, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://srikanthbellary.com"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Srikanth Bellary — Sr. Gen AI Solution Architect",
+    default: pageCopy.home.title,
     template: "%s — Srikanth Bellary",
   },
-  description:
-    "2026 profile. Sr. Gen AI Solution Architect / Forward Deployment. 15+ years. Wellington, FL. GCP PDE. MS Software Engineering.",
-  applicationName: "Srikanth Bellary",
+  description: pageCopy.home.description,
+  applicationName: person.name,
   authors: [{ name: person.name, url: person.site }],
   creator: person.name,
   keywords: [
@@ -24,25 +24,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     locale: "en_US",
-    url: "https://srikanthbellary.com",
-    siteName: "Srikanth Bellary",
-    title: "Srikanth Bellary — Sr. Gen AI Solution Architect",
-    description:
-      "Sr. Gen AI Solution Architect / Forward Deployment. 15+ years. Wellington, FL.",
+    url: siteUrl,
+    siteName: person.name,
+    title: pageCopy.home.title,
+    description: pageCopy.home.description,
     firstName: "Srikanth",
     lastName: "Bellary",
+    images: [ogImage],
   },
   twitter: {
-    card: "summary",
-    title: "Srikanth Bellary",
-    description:
-      "Sr. Gen AI Solution Architect / Forward Deployment. Wellington, FL.",
+    card: "summary_large_image",
+    title: pageCopy.home.title,
+    description: pageCopy.home.description,
+    images: [ogImage.url],
   },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
   alternates: {
-    canonical: "https://srikanthbellary.com",
+    canonical: siteUrl,
   },
 };
 

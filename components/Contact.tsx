@@ -59,6 +59,7 @@ export function Contact() {
         </dl>
         <div className="site-foot">
           <span>© {new Date().getFullYear()} {person.name}</span>
+          <a href="/privacy/">Privacy</a>
           <span>srikanthbellary.com</span>
         </div>
       </div>
