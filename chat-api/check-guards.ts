@@ -125,13 +125,17 @@ if (!sunrise.includes("We only answer questions about what Sunrise Gen AI builds
   failed += 1;
   console.error("sunrise system prompt was not loaded");
 }
-if (!sunrise.includes("West Palm Beach, FL")) {
+if (!sunrise.includes("Florida, United States")) {
   failed += 1;
   console.error("sunrise context prompt was not concatenated");
 }
 if (sunrise.includes("I only answer questions about Srikanth Bellary's work and profile.")) {
   failed += 1;
   console.error("sunrise pack leaked the profile voice");
+}
+if (sunrise.includes("West Palm Beach")) {
+  failed += 1;
+  console.error("sunrise pack must not contain West Palm Beach");
 }
 if (sunrise.includes("Wellington")) {
   failed += 1;
