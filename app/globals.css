@@ -293,6 +293,38 @@ a:hover {
   margin: 0 0 2.25rem;
 }
 
+.fold-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+  align-items: center;
+  margin: 0 0 2.25rem;
+}
+
+.fold-copy {
+  min-width: 0;
+}
+
+.fold-portrait {
+  margin: 0;
+  justify-self: end;
+  width: clamp(10.5rem, 22vw, 16.5rem);
+  padding: 0.28rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--gold);
+}
+
+.fold-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
 .fold-meta {
   display: flex;
   justify-content: space-between;
@@ -347,7 +379,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  margin: 0 0 2.25rem;
+  margin: 0;
 }
 
 .chip {
@@ -995,6 +1027,20 @@ a:hover {
 
   .contact-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .fold-intro {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 1.5rem;
+  }
+
+  .fold-portrait {
+    order: -1;
+    justify-self: start;
+    width: 10.5rem;
   }
 }
 
