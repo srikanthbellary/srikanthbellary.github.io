@@ -61,6 +61,7 @@ const jsonLd = {
     addressCountry: "US",
   },
   sameAs: [person.linkedin, person.github, person.medium],
+  image: `${siteUrl}/srikanth-bellary.jpg`,
 };
 
 export default function RootLayout({
