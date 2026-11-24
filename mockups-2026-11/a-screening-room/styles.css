@@ -1194,6 +1194,11 @@ video {
   overflow: hidden;
   background: #000;
   outline: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.yt.is-playing {
+  cursor: auto;
 }
 
 .yt img {

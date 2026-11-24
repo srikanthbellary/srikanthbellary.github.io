@@ -20,9 +20,10 @@
   /* On narrow screens the year axis scrolls; start it at the recent end */
   $$("[data-axis]").forEach((el) => (el.scrollLeft = el.scrollWidth));
 
-  /* YouTube: nothing loads until play is pressed */
+  /* YouTube: nothing loads until play is pressed. The whole still is the target. */
   $$(".yt").forEach((tile) =>
-    $(".yt-play", tile).addEventListener("click", () => {
+    tile.addEventListener("click", () => {
+      if (tile.classList.contains("is-playing")) return;
       const frame = document.createElement("iframe");
       frame.src = `https://www.youtube-nocookie.com/embed/${tile.dataset.yt}?autoplay=1&rel=0&playsinline=1`;
       frame.title = tile.dataset.title;
@@ -30,6 +31,7 @@
       frame.allowFullscreen = true;
       tile.append(frame);
       tile.classList.add("is-playing");
+      frame.focus({ preventScroll: true });
     }),
   );
 

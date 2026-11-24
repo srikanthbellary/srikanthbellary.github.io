@@ -664,6 +664,11 @@ figcaption span {
   overflow: hidden;
   background: #000;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+.yt.is-playing {
+  cursor: auto;
 }
 
 .yt img {

@@ -50,11 +50,14 @@
     if (event.target === theater) theater.close();
   });
 
-  /* Inline YouTube: nothing loads until play is pressed */
+  /* Inline YouTube: nothing loads until play is pressed. The whole still is the target. */
   $$(".yt").forEach((tile) =>
-    $(".yt-play", tile).addEventListener("click", () => {
-      tile.append(frame(tile.dataset.yt, tile.dataset.title));
+    tile.addEventListener("click", () => {
+      if (tile.classList.contains("is-playing")) return;
+      const player = frame(tile.dataset.yt, tile.dataset.title);
+      tile.append(player);
       tile.classList.add("is-playing");
+      player.focus({ preventScroll: true });
     }),
   );
 
