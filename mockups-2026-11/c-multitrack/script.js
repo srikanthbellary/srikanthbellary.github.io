@@ -57,6 +57,26 @@
   document.fonts?.ready.then(fitName);
   window.addEventListener("resize", fitName);
 
+  /* The address in the contact block fills its row, with room left for the hover stretch */
+  const mail = $(".mail");
+  const fitMail = () => {
+    if (!mail) return;
+    const text = $("span", mail);
+    const arrow = $("svg", mail);
+    mail.style.transition = "none";
+    mail.style.fontStretch = "64%";
+    mail.style.fontSize = "100px";
+    const perPx = text.getBoundingClientRect().width / 100;
+    const hasArrow = arrow && getComputedStyle(arrow).display !== "none";
+    const size = (mail.clientWidth - (hasArrow ? 20 : 0)) / (perPx + (hasArrow ? 0.55 : 0));
+    mail.style.fontSize = `${(size * 0.985).toFixed(1)}px`;
+    mail.style.fontStretch = "";
+    requestAnimationFrame(() => (mail.style.transition = ""));
+  };
+  fitMail();
+  document.fonts?.ready.then(fitMail);
+  window.addEventListener("resize", fitMail);
+
   /* Days to release */
   $$("[data-countdown]").forEach((el) => {
     const [y, m, d] = el.dataset.countdown.split("-").map(Number);
@@ -165,26 +185,37 @@
     }),
   );
 
-  /* Track rows: the loop follows the pointer */
-  const peek = $(".peek");
-  if (peek && hover && !calm) {
-    $$("[data-peek]").forEach((row) => {
-      row.addEventListener("pointerenter", () => {
-        peek.poster = row.dataset.still;
-        peek.src = row.dataset.peek;
-        peek.classList.add("is-on");
-        peek.play().catch(() => {});
-      });
-      row.addEventListener("pointermove", (event) => {
-        peek.style.setProperty("--px", `${event.clientX + 26}px`);
-        peek.style.setProperty("--py", `${event.clientY - 160}px`);
-      });
-      row.addEventListener("pointerleave", () => {
-        peek.classList.remove("is-on");
-        peek.pause();
-      });
+  /* Album decks: the monitor under the cover plays the loop of the song you point at */
+  $$("[data-monitor]").forEach((monitor) => {
+    const deck = monitor.closest(".deck");
+    const video = $("video", monitor);
+    const label = $("[data-monitor-label]", monitor);
+    const rows = $$("[data-peek]", deck);
+    const show = (row) => {
+      if (video.getAttribute("src") !== row.dataset.peek) {
+        video.poster = row.dataset.still;
+        video.src = row.dataset.peek;
+      }
+      label.textContent = row.dataset.label;
+      rows.forEach((other) => other.classList.toggle("is-on", other === row));
+      if (!calm) video.play().catch(() => {});
+    };
+    rows.forEach((row) => {
+      row.addEventListener("pointerenter", () => show(row));
+      row.addEventListener("focus", () => show(row));
+      row.addEventListener("click", () => show(row));
     });
-  }
+    if (!calm && "IntersectionObserver" in window) {
+      new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return video.pause();
+          if (!video.getAttribute("src")) video.src = video.dataset.src;
+          video.play().catch(() => {});
+        },
+        { threshold: 0.3 },
+      ).observe(monitor);
+    }
+  });
 
   /* Shorts: muted, and only while pointed at */
   $$("[data-short]").forEach((card) => {

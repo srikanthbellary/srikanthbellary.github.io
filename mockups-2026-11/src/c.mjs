@@ -67,9 +67,15 @@ const platformLinks = () =>
     .join("");
 
 const deck = (album) => `<article class="deck" id="album-${album.id}" data-reveal>
-    <div class="deck-cover">
-      ${image({ src: album.cover, alt: `${album.title}: album cover`, w: 2000, h: 2000 })}
-      <p class="stamp">${esc(album.out)}</p>
+    <div class="deck-side">
+      <div class="deck-cover">
+        ${image({ src: album.cover, alt: `${album.title}: album cover`, w: 2000, h: 2000 })}
+        <p class="stamp">${esc(album.out)}</p>
+      </div>
+      <figure class="monitor" data-monitor>
+        <video data-src="${album.tracks[0].loop}" poster="${album.tracks[0].still}" muted loop playsinline preload="none" aria-label="${esc(album.title)}: silent loop for the selected song"></video>
+        <figcaption><i class="monitor-led"></i><span>Loop</span><b data-monitor-label>01 · ${esc(album.tracks[0].title)}</b></figcaption>
+      </figure>
     </div>
     <div class="deck-body">
       <p class="tag"><span>Album ${album.chapter}</span><span>${esc(album.language)}</span><span>${esc(album.date)}</span></p>
@@ -83,7 +89,7 @@ const deck = (album) => `<article class="deck" id="album-${album.id}" data-revea
         <ol>
           ${album.tracks
             .map(
-              (t, i) => `<li class="row" data-peek="${t.loop}" data-still="${t.still}">
+              (t, i) => `<li class="row${i === 0 ? " is-on" : ""}" tabindex="0" data-peek="${t.loop}" data-still="${t.still}" data-label="${pad(i + 1)} · ${esc(t.title)}">
             <span class="row-n">${pad(i + 1)}</span>
             <span class="row-title">${esc(t.title)}</span>
             ${t.credit ? `<span class="row-credit">${esc(t.credit)}</span>` : ""}
@@ -297,7 +303,7 @@ export function render() {
   <div class="shorts" id="shorts" data-reveal>
     <div class="sub">
       <h3>Shorts</h3>
-      <p>Six vertical cuts, three from each album. Muted; point at one and it plays.</p>
+      <p>Six vertical cuts, three from each album. Muted; point at one, or tap it, and it plays.</p>
     </div>
     <ul class="shorts-row">
     ${shorts.map(shortCard).join("\n    ")}
@@ -422,7 +428,7 @@ export function render() {
   <ul class="creds" data-reveal>
     ${education.map((e) => `<li><span class="tag"><span>Education</span><span>${e.year}</span></span><b>${esc(e.label)}</b></li>`).join("")}
     <li><span class="tag"><span>Certification</span></span><b>${esc(person.cert)}</b></li>
-    <li><span class="tag"><span>Experience</span></span><b>${esc(person.years)} years in production systems</b></li>
+    <li><span class="tag"><span>Experience</span></span><b>${esc(person.years).replace("+", '<span class="plus">+</span>')} years in production systems</b></li>
   </ul>
 
   ${marquee(stack.map(esc), { cls: "marquee-stack" })}
@@ -494,7 +500,6 @@ export function render() {
 
 </main>
 
-<video class="peek" muted loop playsinline preload="none" aria-hidden="true"></video>
 
 <dialog class="theater" data-theater-dialog aria-label="Video">
   <form method="dialog"><button class="theater-close" aria-label="Close video">Close ${icon.plus({ size: 16 })}</button></form>
