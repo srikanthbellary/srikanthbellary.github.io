@@ -2706,6 +2706,7 @@ video {
     padding: 0 var(--gutter);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
     scrollbar-width: none;
   }
 
