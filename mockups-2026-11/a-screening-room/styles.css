@@ -726,7 +726,7 @@ video {
 
 .rail {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.36fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.62fr);
   border-block: 1px solid var(--line);
   background: var(--bg);
 }
@@ -803,7 +803,7 @@ video {
 }
 
 .rail-posters img {
-  width: clamp(48px, 4.6vw, 68px);
+  width: clamp(44px, 4.1vw, 60px);
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
@@ -2309,7 +2309,7 @@ video {
   }
 
   .id {
-    padding-bottom: 12px;
+    padding-bottom: 22px;
   }
 
   .id-about {

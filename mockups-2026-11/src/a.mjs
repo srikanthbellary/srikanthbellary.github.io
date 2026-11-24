@@ -317,7 +317,7 @@ export function render() {
   <div class="shorts" id="shorts" data-reveal>
     <div class="sub-head">
       <h3>Shorts</h3>
-      <p>Vertical cuts from both albums. Muted; they play when you point at them.</p>
+      <p>Vertical cuts from both albums. Muted; they play when you point at them or tap them.</p>
     </div>
     <ul class="shorts-row">
     ${shorts.map(shortCard).join("\n    ")}
