@@ -347,7 +347,7 @@ export function render() {
     <div class="mf-shorts" id="shorts" data-reveal>
       <div class="sub-head">
         <h3>Shorts</h3>
-        <p>Six vertical cuts, three from each album. Muted; each plays under the pointer.</p>
+        <p>Six vertical cuts, three from each album. Muted; each plays under the pointer, or on a tap.</p>
       </div>
       <ul class="shorts-row">
       ${shorts.map(shortCard).join("\n      ")}

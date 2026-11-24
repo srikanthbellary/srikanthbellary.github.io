@@ -508,8 +508,9 @@ figcaption span {
 
 .plate-video .yt-play {
   left: 50%;
-  bottom: 18px;
-  translate: -50% 0;
+  top: 46%;
+  bottom: auto;
+  translate: -50% -50%;
   width: auto;
   aspect-ratio: auto;
   display: inline-flex;
@@ -2230,7 +2231,8 @@ figcaption span {
 
   .plate-video .yt-play {
     left: 14px;
-    bottom: 14px;
+    top: 14px;
+    bottom: auto;
     translate: 0 0;
     padding: 10px 15px 11px 12px;
     font-size: 13px;
