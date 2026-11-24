@@ -17,6 +17,9 @@
   menu?.addEventListener("click", () => setMenu(bar.getAttribute("data-open") !== "true"));
   $$(".bar-nav a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
 
+  /* On narrow screens the year axis scrolls; start it at the recent end */
+  $$("[data-axis]").forEach((el) => (el.scrollLeft = el.scrollWidth));
+
   /* YouTube: nothing loads until play is pressed */
   $$(".yt").forEach((tile) =>
     $(".yt-play", tile).addEventListener("click", () => {

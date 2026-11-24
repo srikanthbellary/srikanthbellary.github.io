@@ -93,7 +93,7 @@ const sheet = (album) => `<article class="sheet" id="album-${album.id}" data-alb
             )
             .join("")}
         </div>
-        <figcaption><span>${fig()}</span> Loops, one per track. Silent; each plays under the pointer.</figcaption>
+        <figcaption><span>${fig()}</span> Loops, one per track. Silent; each plays under the pointer, or on a tap.</figcaption>
       </figure>
     </article>`;
 
@@ -488,8 +488,8 @@ export function render() {
   })}
 
   <figure class="axis-fig" data-reveal>
-    ${yearAxis()}
-    <figcaption><span>${fig()}</span> The year each engagement began.</figcaption>
+    <div class="axis-scroll" data-axis>${yearAxis()}</div>
+    <figcaption><span>${fig()}</span> The year each engagement began.<i class="axis-hint"> Swipe back to 2006.</i></figcaption>
   </figure>
 
   <table class="record" data-reveal>

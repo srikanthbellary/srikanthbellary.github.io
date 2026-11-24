@@ -1823,6 +1823,11 @@ figcaption span {
   margin-top: 6px;
 }
 
+.axis-hint {
+  display: none;
+  font-style: normal;
+}
+
 .record thead th {
   padding: 0 16px 10px 0;
   font: 500 11px var(--mono);
@@ -2513,12 +2518,32 @@ figcaption span {
     border-top: 1px solid var(--rule);
   }
 
+  .axis-scroll {
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .axis-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .axis-hint {
+    display: inline;
+  }
+
+  .axis {
+    width: 780px;
+    max-width: none;
+  }
+
   .axis-mark text {
-    font-size: 15px;
+    font-size: 14.5px;
   }
 
   .axis-tick text {
-    font-size: 17px;
+    font-size: 15.5px;
   }
 
   .record thead {
