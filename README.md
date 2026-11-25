@@ -2,25 +2,49 @@
 
 Personal profile site for [srikanthbellary.com](https://srikanthbellary.com) and [srikanthbellary.github.io](https://srikanthbellary.github.io).
 
-First-person 2026 resume: dates, client names, and project detail. It is not a capabilities brochure. The client-project chapters are the main scroll; a right-hand chronometer tracks them.
+The home page is a choice between two sides:
 
-## Theme C
+- **Professional** (`/professional/`): the IT and AI engineering work. A first-person resume with dates, client names and project detail: work, stack, experience, contact. It is not a capabilities brochure.
+- **Personal** (`/personal/`): Films & Music. The albums, the featured video, the Shorts strip, Coming 2027 and the short films.
 
-Locked light palette, used exactly:
+Each side has a switch in the bar, a Home link, and a door to the other side above the footer.
+
+## Screening Room
+
+Dark and cinematic, in the storm palette of the album art:
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| Field | `#F7F6F2` | Page |
-| Surface | `#EEECE6` | Cards, plates |
-| Ink | `#0A0E14` | Body type |
-| Midnight | `#0E1A2B` | Nav, bars, chips |
-| Gold | `#A8893D` | Rules, italics, metrics, hairlines |
+| Storm | `#07090D` | Page |
+| Panel | `#10151C` | Cards, plates |
+| Slate | `#9AA1AB` | Secondary type |
+| Bone | `#E8E5DC` | Type |
+| Ember | `#EC7440` | The one accent: rules, numbers, links |
+| Blush, Rose | `#F1D6CC`, `#D8577C` | Her Mood Swings only |
 
-Display face: Cormorant Garamond. Body: Source Serif 4. Both are self-hosted `woff2` files under `public/fonts/` (SIL OFL). No runtime font CDN.
+Display face: Sofia Sans Extra Condensed. Body: Instrument Sans. Labels: JetBrains Mono. All three are self-hosted `woff2` files under `public/fonts/` (SIL OFL). No runtime font CDN.
+
+## Content
+
+- `lib/content.ts`: the professional record. The chat fact sheet in `chat-api/prompt/context.md` mirrors it.
+- `lib/music.ts`: films and music, from the brief of Nov 24, 2026. The rules of that brief are listed at the top of the file. The portrait is never used on the Personal side.
+- `lib/sides.ts`: the two sides, as the home page and the cross-links show them.
+
+Open points are single values in `pending` at the top of `lib/music.ts`: the YouTube channel URL, the Hindi music video, the pre-save links, and whether the Shorts strip plays the Shorts or the silent loops.
+
+## Media
+
+`public/media/` is built from the web-sized asset delivery by a script, and committed:
+
+```bash
+node scripts/prepare-media.mjs <path-to-assets-web>
+```
+
+It writes images at the widths the pages ask for (WebP with a JPEG fallback) and copies the silent loops. It is not part of the site build. Music videos and films are never hosted here: they play from YouTube, and nothing is requested from YouTube until play is pressed.
 
 ## Stack
 
-Next.js App Router, static export. GitHub Actions builds `out/` and deploys to GitHub Pages on push to `main`. Custom domain is `srikanthbellary.com` (`CNAME` in the repo root and `public/CNAME`).
+Next.js App Router, static export: three documents (`/`, `/professional/`, `/personal/`) plus `/privacy/`. Links between them are ordinary links, so the browser can prepare a side while the pointer rests on its door and carry the door into the page (speculation rules and view transitions, where supported). GitHub Actions builds `out/` and deploys to GitHub Pages on push to `main`. Custom domain is `srikanthbellary.com` (`CNAME` in the repo root and `public/CNAME`).
 
 ```bash
 npm install
@@ -46,4 +70,4 @@ npm run check:chat
 
 ## Voice check
 
-`npm run check:voice` fails the build if forbidden names or invented company-site metrics appear in the source.
+`npm run check:voice` fails the build if forbidden names or invented company-site metrics appear in the source. Binary files (images, fonts, video) are skipped.
