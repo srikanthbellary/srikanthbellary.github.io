@@ -1,67 +1,37 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { person } from "@/lib/content";
-import { ogImage, pageCopy, siteUrl } from "@/lib/seo";
+import { siteUrl } from "@/lib/seo";
 import "./globals.css";
 
+// Only what every page shares. Descriptions, keywords, share images and structured data belong to
+// each page (see lib/seo.ts), so that neither side carries a word about the other.
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: pageCopy.home.title,
+    default: person.name,
     template: "%s — Srikanth Bellary",
   },
-  description: pageCopy.home.description,
   applicationName: person.name,
   authors: [{ name: person.name, url: person.site }],
   creator: person.name,
-  keywords: [
-    "Srikanth Bellary",
-    "Gen AI",
-    "Forward Deployment",
-    "autonomous agents",
-    "RAG",
-    "Wellington FL",
-  ],
-  openGraph: {
-    type: "profile",
-    locale: "en_US",
-    url: siteUrl,
-    siteName: person.name,
-    title: pageCopy.home.title,
-    description: pageCopy.home.description,
-    firstName: "Srikanth",
-    lastName: "Bellary",
-    images: [ogImage],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: pageCopy.home.title,
-    description: pageCopy.home.description,
-    images: [ogImage.url],
-  },
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
-  alternates: {
-    canonical: siteUrl,
-  },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: person.name,
-  jobTitle: "Sr. Gen AI Solution Architect",
-  email: person.email,
-  telephone: "+1-440-340-8383",
-  url: person.site,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Wellington",
-    addressRegion: "FL",
-    addressCountry: "US",
-  },
-  sameAs: [person.linkedin, person.github, person.medium],
-  image: `${siteUrl}/srikanth-bellary.jpg`,
+export const viewport: Viewport = {
+  themeColor: "#07090d",
+  colorScheme: "dark",
+};
+
+// The faces used on the first screen of every page. The italic and the mono load when first used.
+const fonts = ["sofia-sans-extra-condensed-latin-wght-normal", "instrument-sans-latin-wdth-normal"];
+
+// The pages are separate documents joined by ordinary links. Where the browser supports speculation
+// rules, a page is prepared while the pointer rests on a link to it, so the click itself is instant.
+// Nothing is shown and nothing navigates until the link is pressed.
+const speculation = {
+  prerender: [{ where: { selector_matches: "[data-side-link]" }, eagerness: "moderate" }],
 };
 
 export default function RootLayout({
@@ -71,13 +41,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        {children}
-      </body>
+      <head>
+        {fonts.map((font) => (
+          <link
+            rel="preload"
+            href={`/fonts/${font}.woff2`}
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+            key={font}
+          />
+        ))}
+        <script type="speculationrules" dangerouslySetInnerHTML={{ __html: JSON.stringify(speculation) }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

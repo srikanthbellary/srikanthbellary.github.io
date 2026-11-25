@@ -1,12 +1,14 @@
 import type { ReactNode } from "react";
 import type { CareerFigure } from "@/lib/content";
 
-const ink = "#0A0E14";
-const field = "#F7F6F2";
-const surface = "#EEECE6";
-const midnight = "#0E1A2B";
-const gold = "#A8893D";
-const display = "Cormorant Garamond, serif";
+// The Screening Room palette. The figures were drawn for a light page, so the roles are named
+// for what they do: the page, the line colour, a raised surface, solid shapes, and the accent.
+const ink = "#E8E5DC";
+const field = "#10151C";
+const surface = "#181E27";
+const midnight = "#E8E5DC";
+const gold = "#EC7440";
+const display = "Sofia Sans Extra Condensed, Arial Narrow, sans-serif";
 
 function Frame({
   label,
