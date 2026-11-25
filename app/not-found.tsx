@@ -11,7 +11,7 @@ export default function NotFound() {
       <PlainBar />
       <main id="top">
         <section className="legal" aria-labelledby="missing">
-          <p className="label">
+          <p className="label label-row">
             <span>Missing</span>
             <span>{person.location}</span>
           </p>

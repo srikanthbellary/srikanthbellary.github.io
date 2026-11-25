@@ -139,7 +139,7 @@ function ShortCard({ short }: { short: Short }) {
           <Play size={16} />
         </span>
       </div>
-      <p className="label">
+      <p className="label label-row">
         <span>{short.n}</span>
         <span>{short.album}</span>
       </p>

@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <PlainBar />
       <main id="top">
         <section className="legal" aria-labelledby="privacy">
-          <p className="label">
+          <p className="label label-row">
             <span>Privacy</span>
             <span>{person.location}</span>
           </p>

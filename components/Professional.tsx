@@ -110,7 +110,7 @@ export function ProfessionalHero() {
 
         <div className="screen-main">
           <div className="title-card">
-            <p className="label">
+            <p className="label label-row">
               <span>Case file 01</span>
               <span>{verizon.client}</span>
               <span>{verizon.role}</span>

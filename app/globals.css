@@ -185,8 +185,17 @@ picture > source {
   color: var(--muted);
 }
 
-.label span + span {
-  padding-left: 14px;
+/* A row of labels with a rule between neighbours. Every item carries its rule on the left and is
+   pulled left by the width of that rule and its padding, so the rule of the first item on a line
+   falls outside the row and is clipped. A line that wraps never starts with a rule. */
+.label-row {
+  column-gap: 0;
+  overflow: hidden;
+}
+
+.label-row span {
+  margin-left: -15px;
+  padding: 0 29px 0 14px;
   border-left: 1px solid var(--line-2);
 }
 
@@ -1873,11 +1882,6 @@ picture > source {
 
 .project .label {
   justify-content: space-between;
-}
-
-.project .label span + span {
-  border: 0;
-  padding: 0;
 }
 
 .project .label span:first-child {

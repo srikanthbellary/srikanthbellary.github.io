@@ -26,7 +26,7 @@ import { LiteYouTube, TheaterButton } from "./Video";
 
 function Labels({ items }: { items: readonly string[] }) {
   return (
-    <p className="label">
+    <p className="label label-row">
       {items.map((item) => (
         <span key={item}>{item}</span>
       ))}
