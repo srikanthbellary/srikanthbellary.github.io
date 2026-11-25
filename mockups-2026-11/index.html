@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Three directions · srikanthbellary.com mockups</title>
-<meta name="description" content="Mockups for review. Three design directions for srikanthbellary.com.">
+<title>Screening Room, with a gateway · srikanthbellary.com mockups</title>
+<meta name="description" content="Mockups for review. Direction A with a Professional / Personal gateway, and the two earlier directions.">
 <link rel="icon" href="data:,">
 <style>
   @font-face {
@@ -54,6 +54,8 @@
     display: block;
     max-width: 100%;
     height: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
   }
 
   header,
@@ -77,7 +79,8 @@
     color: var(--muted);
   }
 
-  .kicker b {
+  .kicker b,
+  .meta b {
     font-weight: 500;
     color: var(--ember);
   }
@@ -91,18 +94,37 @@
   }
 
   .lede {
-    max-width: 62ch;
+    max-width: 64ch;
     margin-top: 20px;
     color: var(--muted);
     font-size: 1.06rem;
+  }
+
+  section {
+    padding-block: clamp(32px, 4.4vw, 60px);
+    border-top: 1px solid var(--line);
+  }
+
+  h2 {
+    margin-top: 10px;
+    font: 600 clamp(1.9rem, 3.4vw, 2.7rem)/1 var(--sans);
+    letter-spacing: -0.03em;
+  }
+
+  h3 {
+    margin-top: 8px;
+    font: 600 1.35rem/1.1 var(--sans);
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    max-width: 68ch;
   }
 
   .direction {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: clamp(24px, 4vw, 56px);
-    padding-block: clamp(32px, 4.4vw, 60px);
-    border-top: 1px solid var(--line);
   }
 
   .shots {
@@ -112,28 +134,36 @@
     align-items: start;
   }
 
-  .shots img {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-  }
-
-  .direction h2 {
-    margin-top: 10px;
-    font: 600 clamp(1.9rem, 3.4vw, 2.7rem)/1 var(--sans);
-    letter-spacing: -0.03em;
-  }
-
-  .direction p {
-    margin-top: 16px;
+  .direction p,
+  .card p {
+    margin-top: 14px;
     color: rgb(232 229 220 / 0.84);
+  }
+
+  .how {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 0;
+    list-style: none;
+    font-size: 0.95rem;
+    color: rgb(232 229 220 / 0.84);
+  }
+
+  .how li {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 16px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
   }
 
   dl {
     display: grid;
     grid-template-columns: 92px minmax(0, 1fr);
     gap: 10px 16px;
-    margin-top: 22px;
-    padding-top: 18px;
+    margin-top: 18px;
+    padding-top: 12px;
     border-top: 1px solid var(--line);
     font-size: 0.94rem;
   }
@@ -156,27 +186,64 @@
     background: var(--c);
   }
 
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+
   .open {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 24px;
-    padding: 12px 18px;
+    padding: 11px 17px;
+    border: 1px solid var(--line);
     border-radius: 999px;
-    background: var(--text);
-    color: var(--bg);
     font-weight: 600;
+    font-size: 0.95rem;
     text-decoration: none;
-    transition: background 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s;
   }
 
+  .open-main,
   .open:hover {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .open-main:hover {
+    border-color: var(--ember);
     background: var(--ember);
   }
 
-  .open svg {
-    width: 14px;
-    height: 14px;
+  .row {
+    display: grid;
+    gap: clamp(16px, 2.4vw, 32px);
+    margin-top: clamp(24px, 3.4vw, 44px);
+  }
+
+  .row-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .row-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card a.shot {
+    display: block;
+  }
+
+  .card .meta {
+    margin-top: 14px;
+  }
+
+  .earlier {
+    color: var(--muted);
   }
 
   footer {
@@ -187,20 +254,22 @@
   footer ul {
     display: grid;
     gap: 8px;
-    max-width: 78ch;
+    max-width: 82ch;
     margin-top: 14px;
     padding-left: 18px;
     color: var(--muted);
     font-size: 0.95rem;
   }
 
-  footer code {
+  code {
     font: 500 0.88em var(--mono);
     color: var(--ember);
   }
 
   @media (max-width: 860px) {
-    .direction {
+    .direction,
+    .row-2,
+    .row-3 {
       grid-template-columns: minmax(0, 1fr);
     }
 
@@ -214,75 +283,105 @@
 
 <header>
   <p class="kicker"><b>Mockups for review</b> · November 2026 · nothing here is live</p>
-  <h1>Three directions for srikanthbellary.com</h1>
-  <p class="lede">One page, built three ways: Applied AI Engineer and AI Solutions Architect, with the music and film in the hero. All three use the same content from the current site and the Music &amp; Film brief, and the same delivered art, loops and Shorts.</p>
+  <h1>Screening Room, with two doors</h1>
+  <p class="lede">Direction A was chosen. In this round the site opens on a choice between two sides: Professional, the IT and AI engineering work, and Personal, the films and music. One click goes in. Each side has a way home and a way across.</p>
 </header>
 
 <main>
-  <article class="direction">
-    <a class="shots" href="a-screening-room/" aria-label="Open Direction A, Screening Room">
-      <img src="previews/a-desktop.jpg" width="1200" height="750" alt="Direction A at 1440 wide: name and roles over a full-width storm scene with the album title">
-      <img src="previews/a-mobile.jpg" width="390" height="844" alt="Direction A at 390 wide">
-    </a>
-    <div>
-      <p class="meta">Direction A · Dark cinematic</p>
-      <h2>Screening Room</h2>
-      <p>The page opens like a title sequence. A compact identity block (portrait, name, the two roles, overview) sits above a full-width screen: the storm banner under rain, the Telugu album title, the days to release, a button that opens the title-track video in a lightbox, and the album cover. A rail under it leads to Album 01, Album 02, Coming 2027 and the three short films. The engineering work follows as case files.</p>
-      <dl>
-        <dt class="label">Fonts</dt>
-        <dd>Sofia Sans Extra Condensed, Instrument Sans, JetBrains Mono</dd>
-        <dt class="label">Palette</dt>
-        <dd class="swatches"><i style="--c:#07090d" title="#07090d"></i><i style="--c:#10151c" title="#10151c"></i><i style="--c:#9aa1ab" title="#9aa1ab"></i><i style="--c:#e8e5dc" title="#e8e5dc"></i><i style="--c:#ec7440" title="#ec7440"></i><i style="--c:#f1d6cc" title="#f1d6cc"></i><i style="--c:#d8577c" title="#d8577c"></i></dd>
-      </dl>
-      <a class="open" href="a-screening-room/">Open Direction A <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></a>
+  <section>
+    <div class="direction">
+      <a class="shots" href="a-screening-room/" aria-label="Open the gateway">
+        <img src="previews/a-gateway-desktop.jpg" width="1200" height="750" alt="The gateway at 1440 wide: two screens side by side, Professional on a drafting grid and Personal over a storm, with the name split across the seam">
+        <img src="previews/a-gateway-mobile.jpg" width="390" height="844" alt="The gateway at 390 wide: the two screens stacked, each half the height of the phone">
+      </a>
+      <div>
+        <p class="meta"><b>Direction A · chosen</b> · Dark cinematic</p>
+        <h2>The gateway</h2>
+        <p>Two screens, like a cinema with two films on. Screen 01 is Professional: the portrait beside the incident-path drawing, on a drafting grid. Screen 02 is Personal: the storm, the figure with the guitar seen from behind, and the album cover. The line from the brief runs across both: “Engineer by day,” on one side, “storyteller always.” on the other. The name sits on the seam, one half on each screen.</p>
+        <ul class="how">
+          <li><span class="label">Desktop</span><span>Point at a screen and it widens, lights up and lists what is inside; the other dims. One click enters.</span></li>
+          <li><span class="label">Keyboard</span><span>The left and right arrow keys pick a screen, Enter opens it.</span></li>
+          <li><span class="label">Phone</span><span>The screens stack, each half the height of the phone. One tap enters.</span></li>
+          <li><span class="label">Speed</span><span>In browsers that support it, the side is prepared while the pointer rests on its door, and the door grows into the page.</span></li>
+        </ul>
+        <dl>
+          <dt class="label">Fonts</dt>
+          <dd>Sofia Sans Extra Condensed, Instrument Sans, JetBrains Mono</dd>
+          <dt class="label">Palette</dt>
+          <dd class="swatches"><i style="--c:#07090d" title="#07090d"></i><i style="--c:#10151c" title="#10151c"></i><i style="--c:#9aa1ab" title="#9aa1ab"></i><i style="--c:#e8e5dc" title="#e8e5dc"></i><i style="--c:#ec7440" title="#ec7440"></i><i style="--c:#f1d6cc" title="#f1d6cc"></i><i style="--c:#d8577c" title="#d8577c"></i></dd>
+        </dl>
+        <div class="links">
+          <a class="open open-main" href="a-screening-room/">Open the gateway</a>
+        </div>
+      </div>
     </div>
-  </article>
 
-  <article class="direction">
-    <a class="shots" href="b-signal-path/" aria-label="Open Direction B, Signal Path">
-      <img src="previews/b-desktop.jpg" width="1200" height="750" alt="Direction B at 1440 wide: a statement headline beside a video plate and the album cover">
-      <img src="previews/b-mobile.jpg" width="390" height="844" alt="Direction B at 390 wide">
-    </a>
-    <div>
-      <p class="meta">Direction B · Clean editorial, technical</p>
-      <h2>Signal Path</h2>
-      <p>A light, editorial page where everything is a numbered figure. The hero states the positioning in one sentence, with the second voice in serif italic, next to a plate: the title-track video (Fig. 1), the album cover (Fig. 2) and a release table for both albums, Coming 2027 and the short films. Music and film then get a storm-dark band inside the paper page, with album spec sheets and contact sheets of the loops. The engineering work gets diagrams with the same care.</p>
-      <dl>
-        <dt class="label">Fonts</dt>
-        <dd>Geist, Geist Mono, Instrument Serif</dd>
-        <dt class="label">Palette</dt>
-        <dd class="swatches"><i style="--c:#f5f4f0" title="#f5f4f0"></i><i style="--c:#ebeae5" title="#ebeae5"></i><i style="--c:#0b0e13" title="#0b0e13"></i><i style="--c:#2347e0" title="#2347e0"></i><i style="--c:#080c11" title="#080c11"></i><i style="--c:#ee7a47" title="#ee7a47"></i><i style="--c:#d8577c" title="#d8577c"></i></dd>
-      </dl>
-      <a class="open" href="b-signal-path/">Open Direction B <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></a>
+    <div class="row row-2">
+      <figure class="card">
+        <img src="previews/a-gateway-hover-professional.jpg" width="960" height="600" alt="The gateway with the pointer on Professional: that screen is wider and lit, and its list shows Work, Stack, Experience and Contact with a line each">
+        <p class="meta">Pointing at Professional</p>
+      </figure>
+      <figure class="card">
+        <img src="previews/a-gateway-hover-personal.jpg" width="960" height="600" alt="The gateway with the pointer on Personal: that screen is wider and lit, and its list shows Albums, Featured video, Shorts, Coming 2027 and Short films">
+        <p class="meta">Pointing at Personal</p>
+      </figure>
     </div>
-  </article>
 
-  <article class="direction">
-    <a class="shots" href="c-multitrack/" aria-label="Open Direction C, Multitrack">
-      <img src="previews/c-desktop.jpg" width="1200" height="750" alt="Direction C at 1440 wide: a very wide name over a session panel of song slices and film tiles">
-      <img src="previews/c-mobile.jpg" width="390" height="844" alt="Direction C at 390 wide">
-    </a>
-    <div>
-      <p class="meta">Direction C · Bold, motion-forward</p>
-      <h2>Multitrack</h2>
-      <p>The hero is a session. Under a name that breathes between condensed and extra-wide are a transport bar and two lanes. The Songs lane has nineteen slices: ten Telugu loops, eight Hindi loops and one rose slice for 2027; they open and play one after another. The Film lane holds the title-track video and the three short films, each opening in a theater overlay. Color blocks, marquees, stamps and tilted Shorts carry the motion down the page.</p>
-      <dl>
-        <dt class="label">Fonts</dt>
-        <dd>Anybody (variable width), Martian Mono</dd>
-        <dt class="label">Palette</dt>
-        <dd class="swatches"><i style="--c:#06090d" title="#06090d"></i><i style="--c:#151c25" title="#151c25"></i><i style="--c:#d3d7da" title="#d3d7da"></i><i style="--c:#e8e5dc" title="#e8e5dc"></i><i style="--c:#f2713c" title="#f2713c"></i><i style="--c:#f1d6cc" title="#f1d6cc"></i><i style="--c:#d8577c" title="#d8577c"></i></dd>
-      </dl>
-      <a class="open" href="c-multitrack/">Open Direction C <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg></a>
+    <div class="row row-2">
+      <article class="card">
+        <a class="shot" href="a-screening-room/professional.html"><img src="previews/a-professional-desktop.jpg" width="960" height="600" alt="The Professional page: name, roles and portrait above a panel for the current engagement"></a>
+        <p class="meta">Screen 01</p>
+        <h3>Professional</h3>
+        <p>Name, roles, portrait and the overview, then the current engagement as the feature. Below it: work, stack, experience and contact, as on the live site. No music here except one line and a link across.</p>
+        <div class="links"><a class="open" href="a-screening-room/professional.html">Open Professional</a></div>
+      </article>
+      <article class="card">
+        <a class="shot" href="a-screening-room/personal.html"><img src="previews/a-personal-desktop.jpg" width="960" height="600" alt="The Personal page: Films and Music above the storm scene with the album title"></a>
+        <p class="meta">Screen 02</p>
+        <h3>Personal</h3>
+        <p>Films &amp; Music: the albums with their tracklists and loops, the featured video, the Shorts strip, Coming 2027 and the three short films. The portrait does not appear on this side.</p>
+        <div class="links"><a class="open" href="a-screening-room/personal.html">Open Personal</a></div>
+      </article>
     </div>
-  </article>
+
+    <p class="earlier" style="margin-top: 28px">Both pages carry a switch in the top bar (Professional / Personal), a Home link at the top, and a door to the other side above the footer.</p>
+  </section>
+
+  <section>
+    <p class="meta">Earlier round · one page per direction · not chosen</p>
+    <h2>Directions B and C</h2>
+    <p class="earlier" style="margin-top: 14px">These two stay as they were in the first round: a single page each, no gateway. The first-round page for Direction A was replaced by the three pages above; its screenshots are in <code>screenshots/final/</code>.</p>
+    <div class="row row-2">
+      <article class="card">
+        <a class="shots" href="b-signal-path/" aria-label="Open Direction B, Signal Path">
+          <img src="previews/b-desktop.jpg" width="1200" height="750" alt="Direction B at 1440 wide: a statement headline beside a video plate and the album cover">
+          <img src="previews/b-mobile.jpg" width="390" height="844" alt="Direction B at 390 wide">
+        </a>
+        <p class="meta">Direction B · Clean editorial, technical</p>
+        <h3>Signal Path</h3>
+        <div class="links"><a class="open" href="b-signal-path/">Open Direction B</a></div>
+      </article>
+      <article class="card">
+        <a class="shots" href="c-multitrack/" aria-label="Open Direction C, Multitrack">
+          <img src="previews/c-desktop.jpg" width="1200" height="750" alt="Direction C at 1440 wide: a very wide name over a session panel of song slices and film tiles">
+          <img src="previews/c-mobile.jpg" width="390" height="844" alt="Direction C at 390 wide">
+        </a>
+        <p class="meta">Direction C · Bold, motion-forward</p>
+        <h3>Multitrack</h3>
+        <div class="links"><a class="open" href="c-multitrack/">Open Direction C</a></div>
+      </article>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <p class="label">Still to come</p>
+  <p class="label">Still open</p>
   <ul>
-    <li>Three things are shown as labeled placeholders in every direction: <code>[Hindi music video — YouTube link to come]</code>, <code>[YouTube channel URL]</code> and <code>[Pre-save link]</code>.</li>
+    <li>Shown as labeled placeholders: <code>[YouTube channel URL]</code>, <code>[Hindi music video — YouTube link to come]</code> and <code>[Pre-save link]</code>.</li>
+    <li>The Shorts strip in Direction A plays the silent loops of the same six songs for now. The delivered Shorts carry lyric lines as burned-in captions, and the brief allows no lyrics.</li>
+    <li>Track 3 of the Telugu album is spelled “Mounamga Unna” as in the brief. Its cover art reads “MOUNANGA UNNAA”.</li>
     <li>The Ask form is not connected in the mockups.</li>
-    <li>To view: serve this folder with any static server and open this page. The fonts are open-licensed and bundled; nothing loads from a CDN, and YouTube only loads after play is pressed.</li>
+    <li>Screenshots of this round are in <code>screenshots/final-v2/</code>. To view the pages, serve this folder with any static server and open this page.</li>
   </ul>
 </footer>
 
