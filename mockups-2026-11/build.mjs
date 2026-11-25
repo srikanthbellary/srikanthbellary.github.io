@@ -19,9 +19,13 @@ const only = process.argv.slice(2);
 
 for (const { dir, template } of directions) {
   if (only.length && !only.some((key) => dir.startsWith(key))) continue;
-  const { render } = await import(template);
-  const out = join(here, dir, "index.html");
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, render());
-  console.log(`wrote ${dir}/index.html`);
+  const mod = await import(template);
+  // A template is either one page (render) or a set of pages that share a stylesheet and a script.
+  const pages = mod.pages ?? [{ file: "index.html", render: mod.render }];
+  for (const { file, render } of pages) {
+    const out = join(here, dir, file);
+    mkdirSync(dirname(out), { recursive: true });
+    writeFileSync(out, render());
+    console.log(`wrote ${dir}/${file}`);
+  }
 }

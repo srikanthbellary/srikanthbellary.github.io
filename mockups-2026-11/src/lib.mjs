@@ -72,6 +72,7 @@ export const icon = {
   stop: (o) => svg('<rect x="6" y="6" width="12" height="12" rx="1.4" fill="currentColor"/>', o),
   arrowUpRight: (o) => svg('<path d="M7 17 17 7M8.5 7H17v8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>', o),
   arrowRight: (o) => svg('<path d="M4.5 12h15M13.5 6l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>', o),
+  arrowLeft: (o) => svg('<path d="M19.5 12h-15M10.5 6l-6 6 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>', o),
   arrowDown: (o) => svg('<path d="M12 4.5v15M6 13.5l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>', o),
   expand: (o) => svg('<path d="M5 9.5V5h4.5M19 9.5V5h-4.5M5 14.5V19h4.5M19 14.5V19h-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>', o),
   volume: (o) => svg('<path d="M4.5 9.8v4.4h3.2l4.3 3.6V6.2L7.7 9.8H4.5Z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M17.9 6.6a7.6 7.6 0 0 1 0 10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>', o),

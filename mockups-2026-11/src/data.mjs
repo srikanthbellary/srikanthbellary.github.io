@@ -223,6 +223,28 @@ export const shorts = [
   pick("H4_BHOOL"),
 ].map((item, i) => ({ ...item, n: String(i + 1).padStart(2, "0") }));
 
+// Open point: the delivered Shorts carry burned-in lyric captions from their first second, and the brief allows
+// no lyrics on the site. Until Srikanth decides, the strip plays the silent loops of the same six songs.
+// To put the Shorts back, set `shortsUseLoops` to false.
+export const shortsUseLoops = true;
+export const shortsStrip = shortsUseLoops
+  ? [
+      [0, 0],
+      [0, 3],
+      [0, 8],
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ].map(([album, track], i) => ({
+      album: albums[album].language,
+      title: albums[album].tracks[track].title,
+      src: albums[album].tracks[track].loop,
+      still: albums[album].tracks[track].still,
+      n: String(i + 1).padStart(2, "0"),
+      kind: "silent loop",
+    }))
+  : shorts.map((item) => ({ ...item, kind: "vertical Short" }));
+
 /* —— Film (brief) —— */
 
 export const films = [
@@ -359,5 +381,40 @@ export const contactLinks = [
   { id: "github", label: "GitHub", text: "github.com/srikanthbellary", href: person.github },
   { id: "medium", label: "Medium", text: "medium.com/@srikanthbellary01", href: person.medium },
 ];
+
+// The two sides of the site. The gateway offers them as two doors; each destination links to the other.
+export const sides = {
+  professional: {
+    key: "professional",
+    n: "01",
+    href: "professional.html",
+    label: "Professional",
+    tagline: "Engineer by day,",
+    sub: positioning.roles,
+    line: positioning.overview,
+    contents: [
+      { label: "Work", note: career.slice(0, 4).map((c) => c.client).join(", ") },
+      { label: "Stack", note: "Agents, retrieval, data platforms" },
+      { label: "Experience", note: `${career.length} engagements, 2006 to now` },
+      { label: "Contact", note: "Write me directly" },
+    ],
+  },
+  personal: {
+    key: "personal",
+    n: "02",
+    href: "personal.html",
+    label: "Personal",
+    tagline: "storyteller always.",
+    sub: ["Films & Music"],
+    line: "I write cinematic songs in Telugu and Hindi and turn them into AI-generated music videos.",
+    contents: [
+      { label: "Albums", note: albums.map((a) => a.title).join(" · ") },
+      { label: "Featured video", note: featuredVideo.kind },
+      { label: "Shorts", note: "Vertical cuts from both albums" },
+      { label: teaser.status, note: teaser.title },
+      { label: "Short films", note: `Three from ${films[0].year}` },
+    ],
+  },
+};
 
 export const year = 2026;

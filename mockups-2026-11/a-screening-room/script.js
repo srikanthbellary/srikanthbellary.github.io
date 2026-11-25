@@ -27,6 +27,43 @@
   menu?.addEventListener("click", () => setMenu(bar.getAttribute("data-open") !== "true"));
   $$(".bar-nav a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
 
+  /* Gateway: a door wakes under the pointer or the keyboard, whichever moved last.
+     The arrow keys pick a door and Enter opens it. The chosen door grows into the next page. */
+  const gate = $("[data-gate]");
+  if (gate) {
+    const doors = $$("[data-door]", gate);
+    const wake = (door) => {
+      doors.forEach((item) => item.classList.toggle("is-active", item === door));
+      gate.classList.toggle("has-active", Boolean(door));
+    };
+    doors.forEach((door) => {
+      const point = (event) => {
+        if (event.pointerType === "mouse" && !door.classList.contains("is-active")) wake(door);
+      };
+      door.addEventListener("pointerenter", point);
+      door.addEventListener("pointermove", point);
+      door.addEventListener("focus", () => door.matches(":focus-visible") && wake(door));
+      door.addEventListener("blur", () => wake(doors.find((item) => item.matches(":hover")) ?? null));
+      door.addEventListener("click", () => {
+        door.style.viewTransitionName = "stage";
+      });
+    });
+    gate.addEventListener("pointerleave", () => wake(doors.find((item) => item.matches(":focus-visible")) ?? null));
+    window.addEventListener("keydown", (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      const index = { ArrowLeft: 0, ArrowUp: 0, ArrowRight: 1, ArrowDown: 1 }[event.key];
+      if (index === undefined) return;
+      event.preventDefault();
+      doors[index].focus();
+      wake(doors[index]);
+    });
+    // Coming back with the Back button restores the page as it was left: start it fresh.
+    window.addEventListener("pageshow", () => {
+      doors.forEach((door) => (door.style.viewTransitionName = ""));
+      wake(doors.find((item) => item.matches(":hover")) ?? null);
+    });
+  }
+
   /* Days to release */
   $$("[data-countdown]").forEach((el) => {
     const [y, m, d] = el.dataset.countdown.split("-").map(Number);
@@ -146,7 +183,7 @@
         }),
       { rootMargin: "-35% 0px -60% 0px" },
     );
-    $$("main > section[id]").forEach((section) => spy.observe(section));
+    $$("[data-spy]").forEach((section) => spy.observe(section));
   } else {
     revealables.forEach((el) => el.classList.add("is-in"));
   }
