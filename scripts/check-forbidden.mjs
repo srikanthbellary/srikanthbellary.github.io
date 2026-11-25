@@ -62,7 +62,8 @@ function walk(dir, files = []) {
       continue;
     }
     if (skipFiles.has(rel)) continue;
-    if (/\.(png|woff2|woff|jpg|jpeg|webp|ico)$/i.test(entry)) continue;
+    // Binary files hold no prose, and a chance run of bytes can spell a forbidden word.
+    if (/\.(png|woff2|woff|jpg|jpeg|webp|ico|mp4)$/i.test(entry)) continue;
     files.push(abs);
   }
   return files;
