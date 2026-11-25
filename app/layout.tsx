@@ -40,10 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // The class is set before first paint so reveal-on-scroll never hides content when scripts are off.
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        <script dangerouslySetInnerHTML={{ __html: 'document.documentElement.classList.add("js")' }} />
         {fonts.map((font) => (
           <link
             rel="preload"

@@ -2391,19 +2391,27 @@ picture > source {
   text-transform: uppercase;
 }
 
-/* —— Reveal —— */
+/* —— Reveal ——
+   Blocks marked data-reveal rise into place as they come on screen. They are hidden only once the
+   script that reveals them has run (it sets .reveal-ready on the root), so a page whose script is
+   off, slow or broken shows everything. The resting translate is the same in every state, so a
+   block lays out its contents the same way whether or not the script has run. */
 
-.js [data-reveal] {
+[data-reveal] {
+  translate: 0 0;
+}
+
+.reveal-ready [data-reveal] {
   opacity: 0;
   translate: 0 28px;
+}
+
+.reveal-ready [data-reveal].is-in {
+  opacity: 1;
+  translate: 0 0;
   transition:
     opacity 0.9s var(--ease),
     translate 0.9s var(--ease);
-}
-
-.js [data-reveal].is-in {
-  opacity: 1;
-  translate: 0 0;
 }
 
 /* —— The way home ——
@@ -3496,7 +3504,7 @@ html:has(.home) body {
     transition-duration: 0.01ms !important;
   }
 
-  .js [data-reveal] {
+  .reveal-ready [data-reveal] {
     opacity: 1;
     translate: 0 0;
   }

@@ -4,15 +4,23 @@ import { useEffect, useState } from "react";
 
 /**
  * Blocks marked `data-reveal` rise into place the first time they come on screen.
- * The stylesheet only hides them when scripts run (html.js), so nothing is lost without this.
+ *
+ * Nothing is hidden until this has run: the stylesheet only hides blocks under `.reveal-ready`, which is
+ * set here. A page whose script is switched off, slow or fails to load therefore shows everything.
+ * Blocks already on screen, or above it, when this runs are left as they are.
  */
 export function RevealOnScroll() {
   useEffect(() => {
-    const blocks = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
-    if (!("IntersectionObserver" in window)) {
-      blocks.forEach((block) => block.classList.add("is-in"));
-      return;
+    if (!("IntersectionObserver" in window)) return;
+
+    const root = document.documentElement;
+    const waiting: HTMLElement[] = [];
+    for (const block of document.querySelectorAll<HTMLElement>("[data-reveal]")) {
+      if (block.getBoundingClientRect().top < window.innerHeight) block.classList.add("is-in");
+      else waiting.push(block);
     }
+    root.classList.add("reveal-ready");
+
     const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) => {
@@ -22,8 +30,12 @@ export function RevealOnScroll() {
         }),
       { rootMargin: "0px 0px -6% 0px", threshold: 0.04 },
     );
-    blocks.forEach((block) => observer.observe(block));
-    return () => observer.disconnect();
+    waiting.forEach((block) => observer.observe(block));
+
+    return () => {
+      observer.disconnect();
+      root.classList.remove("reveal-ready");
+    };
   }, []);
 
   return null;
