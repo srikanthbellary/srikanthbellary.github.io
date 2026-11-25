@@ -47,6 +47,8 @@ node scripts/prepare-media.mjs <path-to-assets-web>
 
 It writes images at the widths the pages ask for (WebP with a JPEG fallback) and copies the silent loops. It is not part of the site build. Music videos and films are never hosted here: they play from YouTube, and nothing is requested from YouTube until play is pressed.
 
+The share images (`public/og.jpg`, `og-professional.jpg`, `og-personal.jpg`, 1200 × 630) are stills of each page's first screen. They leave out what does not belong in a still: the day countdown, the pending YouTube label and the floating Ask button.
+
 ## Stack
 
 Next.js App Router, static export: three documents (`/`, `/professional/`, `/personal/`) plus `/privacy/`, which belongs to the Professional page. Links between them are ordinary links. Where the browser supports it, a page is prepared while the pointer rests on a link to it and the change of page is a cross-fade (speculation rules and view transitions); nothing navigates until the link is pressed. GitHub Actions builds `out/` and deploys to GitHub Pages on push to `main`. Custom domain is `srikanthbellary.com` (`CNAME` in the repo root and `public/CNAME`).
