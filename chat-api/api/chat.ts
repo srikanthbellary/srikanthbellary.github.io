@@ -28,8 +28,12 @@ const NOVITA_URL = "https://api.novita.ai/openai/v1/chat/completions";
 const MODEL = "meta-llama/llama-3.1-8b-instruct";
 const MAX_MESSAGES = 8;
 const MAX_USER_CHARS = 800;
-const RATE_MAX = 20;
-const RATE_WINDOW_MS = 60 * 60 * 1000;
+// Was 20/hour. Tighter so one client cannot keep calling Novita.
+export const RATE_MAX = 8;
+export const RATE_WINDOW_MS = 60 * 60 * 1000;
+// Per instance, per UTC day. Refuses once reached. There is no shared counter.
+export const DAILY_MAX = 100;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 type Role = "user" | "assistant";
 type ChatMessage = { role: Role; content: string };
@@ -50,6 +54,10 @@ type NodeRes = {
 
 const buckets = new Map<string, number[]>();
 const promptCache = new Map<PromptPack, string>();
+
+export type DailyCounter = { dayStart: number; count: number };
+
+const dailyCounter: DailyCounter = { dayStart: Number.NaN, count: 0 };
 
 function header(req: NodeReq, name: string): string {
   const raw = req.headers[name] ?? req.headers[name.toLowerCase()];
@@ -75,13 +83,29 @@ export function clientIp(req: NodeReq): string {
 }
 
 export function rateLimited(ip: string, now = Date.now()): boolean {
-  const fresh = (buckets.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (!Number.isFinite(now)) return true;
+  const key = ip.trim() || "unknown";
+  const fresh = (buckets.get(key) ?? []).filter((t) => Number.isFinite(t) && now - t < RATE_WINDOW_MS);
   if (fresh.length >= RATE_MAX) {
-    buckets.set(ip, fresh);
+    buckets.set(key, fresh);
     return true;
   }
   fresh.push(now);
-  buckets.set(ip, fresh);
+  buckets.set(key, fresh);
+  return false;
+}
+
+export function globalDailyLimited(now = Date.now(), counter: DailyCounter = dailyCounter): boolean {
+  if (!Number.isFinite(now)) return true;
+  const dayStart = Math.floor(now / DAY_MS) * DAY_MS;
+  if (counter.dayStart !== dayStart) {
+    counter.dayStart = dayStart;
+    counter.count = 0;
+  }
+  if (!Number.isSafeInteger(counter.count) || counter.count < 0 || counter.count >= DAILY_MAX) {
+    return true;
+  }
+  counter.count += 1;
   return false;
 }
 
@@ -159,34 +183,38 @@ function readOrigin(req: NodeReq): string {
 
 export default async function handler(req: NodeReq, res: NodeRes) {
   const origin = readOrigin(req);
-  const originOk = origin ? allowedOrigin(origin) : false;
-  const corsOrigin = originOk ? origin : null;
-
-  if (origin && !originOk) {
+  // Browsers send Origin. A missing or disallowed value must not reach Novita.
+  if (!origin || !allowedOrigin(origin)) {
     json(res, null, 403, { error: "Origin not allowed." });
     return;
   }
 
   if (req.method === "OPTIONS") {
-    applyCors(res, corsOrigin);
+    applyCors(res, origin);
     res.status(204).end();
     return;
   }
 
   if (req.method !== "POST") {
-    json(res, corsOrigin, 405, { error: "Method not allowed." });
+    json(res, origin, 405, { error: "Method not allowed." });
     return;
   }
 
   const ip = clientIp(req);
-  if (rateLimited(ip)) {
-    json(res, corsOrigin, 429, { error: "Too many requests." });
+  let overCap = true;
+  try {
+    overCap = rateLimited(ip) || globalDailyLimited();
+  } catch {
+    overCap = true;
+  }
+  if (overCap) {
+    json(res, origin, 429, { error: "Too many requests." });
     return;
   }
 
   const key = process.env.NOVITA_API_KEY?.trim();
   if (!key) {
-    json(res, corsOrigin, 503, { error: "Chat is not configured." });
+    json(res, origin, 503, { error: "Chat is not configured." });
     return;
   }
 
@@ -195,14 +223,14 @@ export default async function handler(req: NodeReq, res: NodeRes) {
     try {
       payload = JSON.parse(payload);
     } catch {
-      json(res, corsOrigin, 400, { error: "Invalid JSON." });
+      json(res, origin, 400, { error: "Invalid JSON." });
       return;
     }
   }
 
   const messages = validateMessages(payload);
   if (typeof messages === "string") {
-    json(res, corsOrigin, 400, { error: messages });
+    json(res, origin, 400, { error: messages });
     return;
   }
 
@@ -210,7 +238,7 @@ export default async function handler(req: NodeReq, res: NodeRes) {
   try {
     system = loadSystemPrompt(origin);
   } catch {
-    json(res, corsOrigin, 500, { error: "Prompt files are missing." });
+    json(res, origin, 500, { error: "Prompt files are missing." });
     return;
   }
 
@@ -230,7 +258,7 @@ export default async function handler(req: NodeReq, res: NodeRes) {
     });
 
     if (!upstream.ok) {
-      json(res, corsOrigin, 502, { error: "Upstream failed." });
+      json(res, origin, 502, { error: "Upstream failed." });
       return;
     }
 
@@ -239,12 +267,12 @@ export default async function handler(req: NodeReq, res: NodeRes) {
     };
     const reply = data.choices?.[0]?.message?.content?.trim();
     if (!reply) {
-      json(res, corsOrigin, 502, { error: "Empty reply." });
+      json(res, origin, 502, { error: "Empty reply." });
       return;
     }
 
-    json(res, corsOrigin, 200, { reply });
+    json(res, origin, 200, { reply });
   } catch {
-    json(res, corsOrigin, 502, { error: "Upstream failed." });
+    json(res, origin, 502, { error: "Upstream failed." });
   }
 }
