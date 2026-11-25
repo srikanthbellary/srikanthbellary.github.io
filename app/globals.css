@@ -2,7 +2,8 @@
    Dark and cinematic. The storm palette of the album art: blue-black, slate, bone type,
    one ember signal. Rose appears only around Her Mood Swings.
 
-   Three documents share this sheet: the home page (two doors), /professional/ and /personal/.
+   Three documents share this sheet: the home page (the name and two buttons), /professional/
+   and /personal/. The two pages are strictly separate; each links home and nowhere else.
    Fonts are self-hosted under /fonts/ (SIL OFL); nothing is loaded from a font CDN. */
 
 @font-face {
@@ -781,9 +782,7 @@ picture {
   font: 700 clamp(1.25rem, 1.62vw, 1.5rem)/1 var(--display);
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-wrap: balance;
 }
 
 .rail-item i {
@@ -1960,11 +1959,6 @@ picture {
   font-weight: 400;
 }
 
-.group-media dt,
-.group-media dd {
-  color: var(--ember);
-}
-
 .creds {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2407,96 +2401,51 @@ picture {
   translate: 0 0;
 }
 
-/* —— Sides: the switch in the bar, the way home, the way across —— */
+/* —— The way home ——
+   The two pages never link to each other. Each has one way out: Home. */
 
 .bar-left {
   display: flex;
   align-items: center;
-  gap: clamp(14px, 1.7vw, 26px);
+  gap: clamp(12px, 1.5vw, 22px);
   justify-self: start;
   min-width: 0;
 }
 
-.switch {
-  display: flex;
-  padding: 3px;
+.bar-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px 8px 11px;
   border: 1px solid var(--line-2);
   border-radius: 999px;
-}
-
-.switch a {
-  padding: 6px 13px 7px;
-  border-radius: 999px;
   font: 600 12.5px/1.2 var(--body);
-  color: var(--muted);
   white-space: nowrap;
   transition:
+    background 0.25s,
     color 0.25s,
-    background 0.25s;
+    border-color 0.25s;
 }
 
-.switch a:hover {
-  color: var(--text);
+.bar-home svg {
+  color: var(--ember);
+  transition:
+    translate 0.3s var(--ease),
+    color 0.25s;
 }
 
-.switch a[aria-current="page"] {
+.bar-home:hover {
+  border-color: var(--text);
   background: var(--text);
   color: var(--bg);
 }
 
-.bar-nav-more {
-  display: none;
+.bar-home:hover svg {
+  color: var(--bg);
+  translate: -2px 0;
 }
 
-.bar-note {
-  justify-self: end;
-  display: flex;
-  gap: 14px;
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgb(232 229 220 / 0.74);
-}
-
-.bar-note span + span {
-  padding-left: 14px;
-  border-left: 1px solid var(--line-2);
-}
-
-.back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text);
-  transition: color 0.2s;
-}
-
-.back svg {
-  color: var(--ember);
-  transition: translate 0.3s var(--ease);
-}
-
-.back:hover {
-  color: var(--ember);
-}
-
-.back:hover svg {
-  translate: -3px 0;
-}
-
-.inline-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  border-bottom: 1px solid var(--ember);
-  color: var(--text);
-  white-space: nowrap;
-  transition: color 0.2s;
-}
-
-.inline-link:hover {
-  color: var(--ember);
-}
+/* —— First screens: what differs between the two pages —— */
 
 .id-plain {
   grid-template-columns: minmax(0, 1fr);
@@ -2515,11 +2464,9 @@ picture {
   padding: 0 var(--gutter);
 }
 
-/* The professional backdrop: a drafting grid with the incident path drawn on it. */
+/* The Professional backdrop: a drafting grid with the incident path drawn on it. */
 
-.screen-pro .screen-bg,
-.door-pro .door-bg,
-.cross-pro .door-bg {
+.screen-pro .screen-bg {
   background-color: #090d12;
   background-image:
     linear-gradient(rgb(232 229 220 / 0.045) 1px, transparent 1px),
@@ -2540,32 +2487,23 @@ picture {
   opacity: 0.17;
 }
 
-.screen-pro .bp text,
-.cross-pro .bp text {
+/* As a backdrop the drawing is line work only: no labels, no filled boxes. */
+
+.screen-pro .bp text {
   display: none;
 }
 
-/* As a backdrop the drawing is line work only: no filled boxes. */
-
 .screen-pro .bp .human rect,
-.cross-pro .bp .human rect {
+.screen-pro .bp .cluster {
   fill: none;
   stroke: var(--text);
 }
 
-.screen-pro .bp .cluster,
-.cross-pro .bp .cluster {
-  fill: none;
-  stroke: var(--text);
-}
-
-.screen-pro .bp :is(.agent circle, .pulse-dot),
-.cross-pro .bp :is(.agent circle, .pulse-dot) {
+.screen-pro .bp :is(.agent circle, .pulse-dot) {
   fill: var(--text);
 }
 
-.screen-pro .bp .wire-hot,
-.cross-pro .bp .wire-hot {
+.screen-pro .bp .wire-hot {
   stroke: var(--text);
 }
 
@@ -2612,535 +2550,112 @@ picture {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-/* —— Gateway: two screens, one choice —— */
-
-[data-page="gateway"] .bar {
-  grid-template-columns: 1fr auto;
-  border-bottom: 0;
-  background: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  pointer-events: none;
+main > .foot {
+  margin-inline: var(--gutter);
 }
 
-[data-page="gateway"] .bar > * {
-  pointer-events: auto;
-}
+/* —— Home ——
+   One screen that never scrolls: the name and two buttons. Nothing else is on it. */
 
-[data-page="gateway"] .bar-name {
-  display: none;
-}
-
-.gate {
-  position: relative;
-  display: flex;
-  min-height: max(100svh, 700px);
-}
-
-.door {
-  position: relative;
-  isolation: isolate;
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  container-type: inline-size;
-  padding: calc(var(--bar-h) + clamp(12px, 3.2vh, 32px)) var(--gutter) clamp(24px, 4.6vh, 46px);
-  outline-offset: -8px;
-  transition: flex-grow 0.75s var(--ease);
-}
-
-.door + .door {
-  border-left: 1px solid var(--line-2);
-}
-
-.door-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+html:has(.home),
+html:has(.home) body {
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
-  filter: brightness(0.8) saturate(0.9);
-  transition: filter 0.6s var(--ease);
+  overscroll-behavior: none;
 }
 
-/* The storm is a band across the top of its door, set in from the left so the figure stands
-   beside the album cover. The list below it sits on plain dark. */
-
-.door-per .screen-bg img {
-  position: absolute;
-  left: 25%;
-  top: 0;
-  width: auto;
-  max-width: none;
-  height: 60%;
-  object-fit: fill;
-  animation: none;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 17%), linear-gradient(to top, transparent, #000 34%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent, #000 17%), linear-gradient(to top, transparent, #000 34%);
-  mask-composite: intersect;
-}
-
-.door-per .screen-flash {
-  bottom: 40%;
-}
-
-.door-per .screen-scrim {
-  background: linear-gradient(to bottom, rgb(7 9 13 / 0.8), rgb(7 9 13 / 0.34) 18%, transparent 34%);
-}
-
-.door-pro .screen-scrim {
+.home {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  row-gap: clamp(26px, 6.4vh, 68px);
+  padding: 20px var(--gutter);
   background:
-    radial-gradient(64% 44% at 62% 46%, rgb(236 116 64 / 0.07), transparent 72%),
-    linear-gradient(to top, var(--bg) 4%, transparent 40%);
+    radial-gradient(70% 58% at 50% 44%, rgb(232 229 220 / 0.055), transparent 72%),
+    var(--bg);
 }
 
-/* The name sits on the seam: one half on each screen. */
+/* Sized from the screen so the whole lockup always fits: one line on a wide screen. */
 
-.door-mast {
-  position: absolute;
-  top: 18px;
-  font: 800 clamp(1.8rem, 2.7vw, 2.5rem)/1 var(--display);
-  letter-spacing: 0.035em;
-  text-transform: uppercase;
-}
-
-.door-pro .door-mast {
-  right: 11px;
-}
-
-.door-per .door-mast {
-  left: 11px;
-}
-
-.door-n {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px 14px;
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ember);
-}
-
-.door-n em {
-  font: italic 400 clamp(1.05rem, 2.9cqi, 1.35rem)/1.2 var(--body);
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--ember-2);
-}
-
-.door h2 {
-  margin-top: 12px;
-  font: 800 clamp(3.4rem, 17cqi, 11.5rem)/0.8 var(--display);
+.home h1 {
+  font: 800 min(13.4vw, 36vh) / 0.8 var(--display);
   letter-spacing: -0.008em;
   text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  animation: home-in 0.9s var(--ease) both;
 }
 
-.door-sub {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 14px;
-  margin-top: 12px;
-  font: 600 clamp(1.2rem, 3.9cqi, 2.1rem)/1 var(--display);
-  letter-spacing: 0.022em;
-  text-transform: uppercase;
-}
-
-.door-sub i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ember);
-}
-
-/* The stage takes whatever height is left and sizes its pictures to it. */
-
-/* Height 0 with flex-grow, not a zero flex-basis: minifiers rewrite `flex: 1 1 0` to a percentage
-   basis, which a column of indefinite height treats as "content" and the pictures then measure 0. */
-
-.door-stage {
-  flex: 1 1 auto;
-  height: 0;
-  min-height: 92px;
-  display: flex;
-  align-items: center;
-  margin-block: clamp(12px, 2.4vh, 26px);
-  container-type: size;
-}
-
-.door-inset {
-  position: relative;
-  flex: none;
-  height: min(100cqh, 34cqw);
-  aspect-ratio: 4 / 5;
-  padding: 5px;
-  border: 1px solid var(--line-2);
-}
-
-.door-inset img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 28%;
-}
-
-.door-plate {
-  flex: none;
-  height: min(100cqh, 34cqw);
-  aspect-ratio: 560 / 300;
-  margin-left: 4cqw;
-  opacity: 0.62;
-  transition: opacity 0.6s var(--ease);
-}
-
-.door-plate .plate-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.door-per .door-stage {
-  justify-content: flex-end;
-}
-
-.door-per .door-inset {
-  height: min(100cqh, 38cqw);
-  aspect-ratio: 1;
-  padding: 0;
-  border: 0;
-  box-shadow:
-    0 30px 70px -20px rgb(0 0 0 / 0.85),
-    0 0 0 1px rgb(232 229 220 / 0.2);
-}
-
-.door-foot {
-  display: flex;
-  flex-direction: column;
-}
-
-.door-line {
-  display: none;
-  max-width: 33rem;
-  margin-bottom: 16px;
-  font-size: 15.5px;
-  line-height: 1.5;
-  color: var(--soft);
-}
-
-.door-list {
-  max-width: 37rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.door-list li {
+.home-choices {
   display: grid;
-  grid-template-columns: clamp(7.2rem, 25cqi, 10.4rem) minmax(0, 1fr);
-  column-gap: 16px;
-  align-items: baseline;
-  padding: 6px 0 7px;
-  border-top: 1px solid var(--line);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: min(100%, 760px);
+  animation: home-in 0.9s 0.12s var(--ease) both;
 }
 
-.door-list b {
-  font: 700 1.28rem/1.05 var(--display);
-  letter-spacing: 0.035em;
-  text-transform: uppercase;
-}
-
-.door-list span {
-  overflow: hidden;
-  font-size: 13.5px;
-  line-height: 1.35;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: var(--muted);
-  opacity: 0;
-  translate: -10px 0;
-  transition:
-    opacity 0.45s var(--ease),
-    translate 0.6s var(--ease);
-}
-
-.door-list li:nth-child(2) span {
-  transition-delay: 0.04s;
-}
-
-.door-list li:nth-child(3) span {
-  transition-delay: 0.08s;
-}
-
-.door-list li:nth-child(4) span {
-  transition-delay: 0.12s;
-}
-
-.door-list li:nth-child(5) span {
-  transition-delay: 0.16s;
-}
-
-.door-enter {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  padding: 12px 20px 13px;
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  background: rgb(7 9 13 / 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  font: 600 14px/1.2 var(--body);
-  white-space: nowrap;
-  transition:
-    background 0.3s,
-    color 0.3s,
-    border-color 0.3s;
-}
-
-.door-enter svg {
-  transition: translate 0.4s var(--ease);
-}
-
-.door-head,
-.door-stage,
-.door-foot {
-  transition: opacity 0.5s var(--ease);
-}
-
-.gate-hint {
-  position: absolute;
-  right: var(--gutter);
-  bottom: clamp(24px, 4.6vh, 46px);
-  display: none;
-  align-items: center;
-  gap: 7px;
-  font: 500 10.5px/1 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgb(232 229 220 / 0.6);
-  pointer-events: none;
-}
-
-.gate-hint kbd {
+.home-btn {
   display: grid;
   place-items: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
-  border: 1px solid var(--line-2);
-  border-radius: 4px;
-  font: inherit;
-  color: var(--text);
+  height: clamp(50px, 9.4vh, 84px);
+  border: 1px solid rgb(232 229 220 / 0.55);
+  font: 700 clamp(1.25rem, 3.4vh, 1.95rem) / 1 var(--display);
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s;
 }
 
-.gate-hint span + kbd {
-  margin-left: 9px;
+.home-btn:hover,
+.home-btn:focus-visible {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
 }
 
-/* A door answers the pointer and the keyboard the same way: it widens, lights up and says what is inside.
-   The stage is marked with the door that was last pointed at or focused (see GateStage);
-   without scripts, plain hover does the same. */
+.home-btn:active {
+  border-color: var(--ember);
+  background: var(--ember);
+  color: var(--bg);
+}
 
-@media (hover: hover) and (min-width: 901px) {
-  .gate-hint {
-    display: flex;
-  }
-
-  :is(.gate[data-active="professional"] .door-pro, .gate[data-active="personal"] .door-per),
-  html:not(.js) .door:is(:hover, :focus-visible) {
-    flex-grow: 1.5;
-  }
-
-  :is(.gate[data-active="professional"] .door-pro, .gate[data-active="personal"] .door-per) .door-bg,
-  html:not(.js) .door:is(:hover, :focus-visible) .door-bg,
-  .cross-door:is(:hover, :focus-visible) .door-bg {
-    filter: brightness(1.04) saturate(1.04);
-  }
-
-  .gate[data-active="professional"] .door-pro .door-plate,
-  html:not(.js) .door:is(:hover, :focus-visible) .door-plate {
-    opacity: 1;
-  }
-
-  .gate[data-active="personal"] .door-per .screen-rain::before {
-    opacity: 0.62;
-  }
-
-  :is(.gate[data-active="professional"] .door-pro, .gate[data-active="personal"] .door-per) .door-list span,
-  html:not(.js) .door:is(:hover, :focus-visible) .door-list span {
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  :is(.gate[data-active="professional"] .door-pro, .gate[data-active="personal"] .door-per) .door-enter,
-  html:not(.js) .door:is(:hover, :focus-visible) .door-enter,
-  .cross-door:is(:hover, :focus-visible) .door-enter {
-    border-color: var(--text);
-    background: var(--text);
-    color: var(--bg);
-  }
-
-  :is(.gate[data-active="professional"] .door-pro, .gate[data-active="personal"] .door-per) .door-enter svg,
-  .cross-door:is(:hover, :focus-visible) .door-enter svg {
-    translate: 4px 0;
-  }
-
-  :is(.gate[data-active="professional"] .door-per, .gate[data-active="personal"] .door-pro) .door-bg {
-    filter: brightness(0.42) saturate(0.5);
-  }
-
-  :is(.gate[data-active="professional"] .door-per, .gate[data-active="personal"] .door-pro) :is(.door-head, .door-stage, .door-foot) {
-    opacity: 0.55;
+@keyframes home-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
   }
 }
 
-@media (min-width: 901px) and (min-height: 880px) {
-  .door-line {
+/* A tall, narrow screen: the name takes two lines, and the buttons stack under it at its width. */
+
+@media (max-aspect-ratio: 4 / 5) {
+  .home h1 {
+    font-size: min(28vw, 19vh);
+  }
+
+  .home h1 span {
     display: block;
   }
-}
 
-@media (hover: none) {
-  .door-list span {
-    opacity: 1;
-    translate: 0 0;
+  .home-choices {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
   }
 }
 
-.door:active .door-bg {
-  filter: brightness(1.04) saturate(1.04);
-}
-
-/* —— The other side, at the foot of each page —— */
-
-.cross {
-  margin-top: clamp(84px, 9.6vw, 148px);
-  border-top: 1px solid var(--line-2);
-}
-
-.cross-door {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: 24px;
-  align-items: end;
-  min-height: clamp(330px, 34vw, 480px);
-  padding: clamp(28px, 4vw, 56px) var(--gutter);
-  outline-offset: -8px;
-}
-
-.cross-door .door-bg {
-  filter: brightness(0.86) saturate(0.94);
-}
-
-.cross-per .screen-bg img {
-  object-position: 50% 86%;
-}
-
-.cross-per .screen-scrim {
-  background:
-    linear-gradient(to right, rgb(7 9 13 / 0.6), rgb(7 9 13 / 0.1) 56%, rgb(7 9 13 / 0.42)),
-    linear-gradient(to top, rgb(7 9 13 / 0.62), transparent 52%);
-}
-
-.cross-pro .bp {
-  right: -3%;
-  top: -34%;
-  width: 66%;
-  opacity: 0.24;
-}
-
-.cross-pro .screen-scrim {
-  background: linear-gradient(to right, rgb(7 9 13 / 0.9), rgb(7 9 13 / 0.3) 60%, transparent);
-}
-
-.cross-head {
-  grid-column: 1 / span 8;
-}
-
-.cross-head h2 {
-  margin-top: 16px;
-  font: 800 clamp(4.4rem, 10.6vw, 10rem)/0.82 var(--display);
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-
-.cross-head .door-sub {
-  font-size: clamp(1.3rem, 2.25vw, 2.1rem);
-}
-
-.cross-side {
-  grid-column: 9 / -1;
-  display: grid;
-  justify-items: start;
-  padding-bottom: 6px;
-  font-size: 16px;
-  color: var(--soft);
-}
-
-.cross-home {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px var(--gutter) 19px;
-  border-block: 1px solid var(--line);
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  transition:
-    background 0.3s,
-    color 0.3s;
-}
-
-.cross-home b {
-  font-weight: 500;
-  color: var(--text);
-}
-
-.cross-home svg {
-  color: var(--ember);
-  transition: translate 0.3s var(--ease);
-}
-
-.cross-home:hover {
-  background: var(--panel);
-  color: var(--text);
-}
-
-.cross-home:hover svg {
-  translate: -3px 0;
-}
-
-main > .foot {
-  margin: 0 var(--gutter);
-  border-top: 0;
-}
-
-/* —— Entering a side: the door grows into the page —— */
+/* —— Moving between the pages: a plain cross-fade where the browser supports it —— */
 
 @view-transition {
   navigation: auto;
-}
-
-[data-page="professional"] .hero,
-[data-page="personal"] .hero {
-  view-transition-name: stage;
-}
-
-::view-transition-group(stage) {
-  animation-duration: 0.55s;
-  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-::view-transition-old(stage),
-::view-transition-new(stage) {
-  height: 100%;
-  object-fit: cover;
-  object-position: 0 0;
 }
 
 /* —— Ask about my work: the chat panel —— */
@@ -3324,10 +2839,6 @@ main > .foot {
 }
 
 /* —— Plain pages: privacy, not found —— */
-
-.plain .bar {
-  grid-template-columns: 1fr auto;
-}
 
 .legal {
   max-width: 52rem;
@@ -3986,13 +3497,29 @@ main > .foot {
   }
 }
 
-/* —— Sides and gateway: narrower screens —— */
+/* —— Narrower screens: the bar and the first screens —— */
 
-@media (max-width: 1180px) {
-  .bar-left .bar-name {
+/* Narrower desktops: the film cell gives up its posters so every title in the rail has room. */
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .rail {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .rail-film {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .rail-posters {
     display: none;
   }
 
+  .rail-item {
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 1180px) {
   .screen-pro .title-card {
     grid-column: 1 / span 7;
   }
@@ -4003,36 +3530,6 @@ main > .foot {
 }
 
 @media (max-width: 900px) {
-  .switch a {
-    padding: 6px 10px 7px;
-    font-size: 11.5px;
-  }
-
-  .bar-nav .bar-nav-more {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 0 4px;
-    border-bottom: 0;
-    font: 500 11px/1.4 var(--mono);
-    letter-spacing: 0.1em;
-    color: var(--muted);
-  }
-
-  .bar-nav .bar-nav-more + .bar-nav-more {
-    padding-top: 8px;
-  }
-
-  .bar-nav-more svg {
-    color: var(--ember);
-  }
-
-  /* A thumb-sized target for the way home */
-  .id-meta .back {
-    margin: -14px 0;
-    padding: 14px 14px 14px 0;
-  }
-
   .id-plain .id-name h1 {
     grid-column: 1 / -1;
   }
@@ -4062,136 +3559,43 @@ main > .foot {
     margin-top: 6px;
   }
 
-  [data-page="gateway"] .bar-name {
-    display: inline;
+  .chat-launch {
+    width: 48px;
+    height: 48px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bar-left .bar-name {
+    display: none;
+  }
+}
+
+@media (max-width: 359px) {
+  .bar,
+  .bar-left {
+    gap: 10px;
   }
 
-  [data-page="gateway"] .bar-note span + span {
+  .bar-menu::before {
     display: none;
   }
 
-  .door-mast {
-    display: none;
+  .id {
+    grid-template-columns: 68px minmax(0, 1fr);
   }
 
-  .gate {
-    flex-direction: column;
-    min-height: 100svh;
+  .id-portrait {
+    width: 68px;
   }
 
-  .door {
-    padding: 20px var(--gutter) 22px;
+  .id-name h1 {
+    font-size: 3.3rem;
   }
 
-  .door:first-of-type {
-    padding-top: calc(var(--bar-h) + 14px);
-  }
-
-  .door + .door {
-    border-left: 0;
-    border-top: 1px solid var(--line-2);
-  }
-
-  .door-bg {
-    filter: brightness(0.94) saturate(0.96);
-  }
-
-  .door-per .screen-bg img {
-    left: 22%;
-    height: 62%;
-  }
-
-  .door-n {
-    font-size: 10px;
-  }
-
-  .door h2 {
-    margin-top: 10px;
-  }
-
-  .door-sub {
-    gap: 6px 10px;
-    margin-top: 10px;
-    font-size: clamp(1.05rem, 4.9cqi, 1.5rem);
-  }
-
-  .door-sub i {
-    width: 5px;
-    height: 5px;
-  }
-
-  .door-stage {
-    min-height: 84px;
-    margin-block: 14px;
-  }
-
-  .door-plate {
-    opacity: 0.8;
-  }
-
-  .door-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px 0;
-    border: 0;
-  }
-
-  .door-list li {
-    display: inline-flex;
-    padding: 0;
-    border: 0;
-  }
-
-  .door-list li:not(:last-child)::after {
-    content: "/";
-    margin: 0 0.6em;
-    font: 500 10.5px/1.5 var(--mono);
-    color: var(--dim);
-  }
-
-  .door-list b {
-    font: 500 10.5px/1.5 var(--mono);
-    letter-spacing: 0.1em;
-    color: var(--muted);
-  }
-
-  .door-list span {
-    display: none;
-  }
-
-  .door-enter {
-    margin-top: 14px;
-    padding: 10px 16px 11px;
-    font-size: 13px;
-  }
-
-  .cross-door {
-    min-height: 340px;
-  }
-
-  .cross-head,
-  .cross-side {
-    grid-column: 1 / -1;
-  }
-
-  .cross-head h2 {
-    font-size: clamp(3.4rem, 17.6vw, 6rem);
-  }
-
-  .cross-side {
-    margin-top: 14px;
-    font-size: 15px;
-  }
-
-  .cross-pro .bp {
-    right: -60%;
-    top: -6%;
-    width: 150%;
-    opacity: 0.16;
-  }
-
-  .cross-home span {
-    display: none;
+  .id-roles {
+    font-size: 1rem;
   }
 }
 

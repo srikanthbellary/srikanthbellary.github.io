@@ -1,4 +1,4 @@
-import { person, positioning } from "@/lib/content";
+import { person } from "@/lib/content";
 import {
   albums,
   albumsNewestFirst,
@@ -14,11 +14,15 @@ import {
   type Album,
 } from "@/lib/music";
 import { StormBackdrop } from "./Backdrops";
-import { ArrowDown, ArrowLeft, ArrowUpRight, Play } from "./icons";
+import { ArrowDown, ArrowUpRight, Play } from "./icons";
 import { AlbumTracks, ShortsStrip } from "./Loops";
 import { Countdown } from "./Motion";
 import { Picture } from "./Picture";
 import { LiteYouTube, TheaterButton } from "./Video";
+
+// The Personal page: Films & Music, and nothing else.
+// It links home and never to the other page, and it does not mention that page's content.
+// From lib/content.ts it takes only the name and the location.
 
 function Labels({ items }: { items: readonly string[] }) {
   return (
@@ -49,9 +53,6 @@ export function PersonalHero() {
   return (
     <section className="hero hero-per" id="intro" aria-label="Introduction" data-area="music">
       <p className="id-meta">
-        <a className="back" href="/" data-side-link>
-          <ArrowLeft size={13} /> Home
-        </a>
         <span>{person.name}</span>
         <span>{person.location}</span>
         <span>
@@ -65,9 +66,9 @@ export function PersonalHero() {
             Films <em>&amp;</em> Music
           </h1>
           <p className="id-roles">
-            <span>{positioning.also[0]}</span>
+            <span>{artist.roles[0]}</span>
             <i aria-hidden="true" />
-            <span>{positioning.also[1]}</span>
+            <span>{artist.roles[1]}</span>
           </p>
         </div>
       </div>
@@ -361,7 +362,9 @@ export function Films() {
         }
       >
         <p className="lead">Three shorts from {films[0].year}.</p>
-        <p>Press play to watch here, or open them on YouTube.</p>
+        <p>
+          Press play to watch here, or open them on YouTube. Nothing loads from YouTube until you press play.
+        </p>
       </SectionHead>
 
       <div className="films-row" data-reveal>

@@ -2,12 +2,17 @@
 
 Personal profile site for [srikanthbellary.com](https://srikanthbellary.com) and [srikanthbellary.github.io](https://srikanthbellary.github.io).
 
-The home page is a choice between two sides:
+Three pages, strictly separate:
 
+- **Home** (`/`): the name and two buttons, PROFESSIONAL and PERSONAL. Nothing else is on it, and it does not scroll.
 - **Professional** (`/professional/`): the IT and AI engineering work. A first-person resume with dates, client names and project detail: work, stack, experience, contact. It is not a capabilities brochure.
 - **Personal** (`/personal/`): Films & Music. The albums, the featured video, the Shorts strip, Coming 2027 and the short films.
 
-Each side has a switch in the bar, a Home link, and a door to the other side above the footer.
+Rules that hold across the site:
+
+- Only a click on a Home button leads to a page. Home shows no previews, photos, lists or hints.
+- Neither page links to the other or mentions the other's content, in the page or in its metadata. The only way across is the Home link, then the other button.
+- The portrait is used on the Professional page only.
 
 ## Screening Room
 
@@ -27,8 +32,8 @@ Display face: Sofia Sans Extra Condensed. Body: Instrument Sans. Labels: JetBrai
 ## Content
 
 - `lib/content.ts`: the professional record. The chat fact sheet in `chat-api/prompt/context.md` mirrors it.
-- `lib/music.ts`: films and music, from the brief of Nov 24, 2026. The rules of that brief are listed at the top of the file. The portrait is never used on the Personal side.
-- `lib/sides.ts`: the two sides, as the home page and the cross-links show them.
+- `lib/music.ts`: films and music, from the brief of Nov 24, 2026. The rules of that brief are listed at the top of the file.
+- `lib/seo.ts`: titles, descriptions and share images, one set per page.
 
 Open points are single values in `pending` at the top of `lib/music.ts`: the YouTube channel URL, the Hindi music video, the pre-save links, and whether the Shorts strip plays the Shorts or the silent loops.
 
@@ -44,7 +49,7 @@ It writes images at the widths the pages ask for (WebP with a JPEG fallback) and
 
 ## Stack
 
-Next.js App Router, static export: three documents (`/`, `/professional/`, `/personal/`) plus `/privacy/`. Links between them are ordinary links, so the browser can prepare a side while the pointer rests on its door and carry the door into the page (speculation rules and view transitions, where supported). GitHub Actions builds `out/` and deploys to GitHub Pages on push to `main`. Custom domain is `srikanthbellary.com` (`CNAME` in the repo root and `public/CNAME`).
+Next.js App Router, static export: three documents (`/`, `/professional/`, `/personal/`) plus `/privacy/`, which belongs to the Professional page. Links between them are ordinary links. Where the browser supports it, a page is prepared while the pointer rests on a link to it and the change of page is a cross-fade (speculation rules and view transitions); nothing navigates until the link is pressed. GitHub Actions builds `out/` and deploys to GitHub Pages on push to `main`. Custom domain is `srikanthbellary.com` (`CNAME` in the repo root and `public/CNAME`).
 
 ```bash
 npm install

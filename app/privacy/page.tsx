@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { PlainBar } from "@/components/Plain";
-import { SiteFoot } from "@/components/Sides";
+import { SiteFoot } from "@/components/SiteFoot";
 import { person } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata("privacy");
 
+// The privacy note covers the chat on the Professional page, and is linked only from there.
 export default function PrivacyPage() {
   return (
     <div className="plain">
@@ -37,11 +38,6 @@ export default function PrivacyPage() {
               travel through your own mail or phone, not through a form on
               this site.
             </p>
-            <h2>Video</h2>
-            <p>
-              The music videos and short films play from YouTube. Nothing is
-              requested from YouTube until you press play on one of them.
-            </p>
             <h2>Cookies</h2>
             <p>
               This profile does not set extra cookies for advertising or
@@ -51,7 +47,7 @@ export default function PrivacyPage() {
             <p>
               Write{" "}
               <a href={`mailto:${person.email}`}>{person.email}</a>.{" "}
-              <a href="/">Return home</a>.
+              <a href="/professional/">Return to the profile</a>.
             </p>
           </div>
         </section>

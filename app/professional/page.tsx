@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Chat } from "@/components/Chat";
+import { JsonLd } from "@/components/JsonLd";
 import { RevealOnScroll } from "@/components/Motion";
 import { Contact, Experience, ProfessionalHero, Stack, Work } from "@/components/Professional";
-import { CrossOver, SiteFoot } from "@/components/Sides";
 import { SiteBar } from "@/components/SiteBar";
-import { person } from "@/lib/content";
-import { pageMetadata } from "@/lib/seo";
-import { sides } from "@/lib/sides";
+import { SiteFoot } from "@/components/SiteFoot";
+import { person, positioning } from "@/lib/content";
+import { pageCopy, pageMetadata, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata("professional");
 
@@ -17,30 +17,40 @@ const sections = [
   { href: "#contact", label: "Contact" },
 ] as const;
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: person.name,
+  jobTitle: positioning.roles,
+  email: person.email,
+  telephone: "+1-440-340-8383",
+  url: new URL(pageCopy.professional.path, siteUrl).toString(),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Wellington",
+    addressRegion: "FL",
+    addressCountry: "US",
+  },
+  sameAs: [person.linkedin, person.github, person.medium],
+  image: `${siteUrl}/srikanth-bellary.jpg`,
+};
+
+// The IT and AI engineering work, and nothing else. This page links home, never to the other side.
 export default function ProfessionalPage() {
   return (
     <div data-page="professional">
+      <JsonLd data={jsonLd} />
       <a className="skip" href="#work">
         Skip to work
       </a>
-      <SiteBar
-        name={person.name}
-        sides={[
-          { href: sides.professional.href, label: sides.professional.label },
-          { href: sides.personal.href, label: sides.personal.label },
-        ]}
-        current={0}
-        sections={sections}
-        cta={{ href: `mailto:${person.email}`, label: "Write me" }}
-      />
+      <SiteBar name={person.name} sections={sections} cta={{ href: `mailto:${person.email}`, label: "Write me" }} />
       <main id="top">
         <ProfessionalHero />
         <Work />
         <Stack />
         <Experience />
         <Contact />
-        <CrossOver from="professional" />
-        <SiteFoot from="professional" />
+        <SiteFoot privacy />
       </main>
       <Chat />
       <RevealOnScroll />

@@ -4,7 +4,7 @@ import { IncidentPlate } from "./figures/Plates";
 import { Picture } from "./Picture";
 
 // The storm of the album art: the wide banner, a flash now and then, rain, and a scrim for the type.
-// Personal side. The banner has no close-up: the figure is small and seen from behind.
+// Personal page only. The banner has no close-up: the figure is small and seen from behind.
 export function StormBackdrop({ sizes, eager = false }: { sizes: string; eager?: boolean }) {
   return (
     <>
@@ -16,7 +16,7 @@ export function StormBackdrop({ sizes, eager = false }: { sizes: string; eager?:
   );
 }
 
-// The drafting grid of the Professional side, with the incident path drawn on it as line work.
+// A drafting grid with the incident path drawn on it as line work. Professional page only.
 export function BlueprintBackdrop() {
   return (
     <>

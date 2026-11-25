@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
 import { RevealOnScroll } from "@/components/Motion";
 import { Coming, FeaturedVideo, Films, Music, PersonalHero, Shorts } from "@/components/Personal";
-import { CrossOver, SiteFoot } from "@/components/Sides";
 import { SiteBar } from "@/components/SiteBar";
+import { SiteFoot } from "@/components/SiteFoot";
 import { Theater } from "@/components/Video";
 import { person } from "@/lib/content";
 import { artist } from "@/lib/music";
-import { pageMetadata } from "@/lib/seo";
-import { sides } from "@/lib/sides";
+import { pageCopy, pageMetadata, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata("personal");
 
@@ -19,23 +19,26 @@ const sections = [
   { href: "#film", label: "Short films" },
 ] as const;
 
-// Films & Music. The portrait never appears on this side: music, not face.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: artist.name,
+  jobTitle: artist.roles,
+  description: artist.bio,
+  url: new URL(pageCopy.personal.path, siteUrl).toString(),
+  sameAs: [artist.spotify, artist.appleMusic],
+};
+
+// Films & Music, and nothing else. This page links home, never to the other side.
+// The portrait is not used here: music, not face.
 export default function PersonalPage() {
   return (
     <div data-page="personal">
+      <JsonLd data={jsonLd} />
       <a className="skip" href="#music">
         Skip to the albums
       </a>
-      <SiteBar
-        name={person.name}
-        sides={[
-          { href: sides.professional.href, label: sides.professional.label },
-          { href: sides.personal.href, label: sides.personal.label },
-        ]}
-        current={1}
-        sections={sections}
-        cta={{ href: artist.spotify, label: "Listen", external: true }}
-      />
+      <SiteBar name={person.name} sections={sections} cta={{ href: artist.spotify, label: "Listen", external: true }} />
       <main id="top">
         <PersonalHero />
         <Music />
@@ -43,8 +46,7 @@ export default function PersonalPage() {
         <Shorts />
         <Coming />
         <Films />
-        <CrossOver from="personal" />
-        <SiteFoot from="personal" />
+        <SiteFoot />
       </main>
       <Theater />
       <RevealOnScroll />

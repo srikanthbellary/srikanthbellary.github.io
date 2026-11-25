@@ -1,30 +1,38 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "./icons";
+import { ArrowLeft, ArrowUpRight } from "./icons";
 
 type Link = { href: string; label: string };
 
 type SiteBarProps = {
   name: string;
-  /** The two sides, Professional first. */
-  sides: readonly [Link, Link];
-  /** Which of the two this page is. */
-  current: 0 | 1;
   /** Sections of this page. Hash links; the one on screen is marked as you scroll. */
   sections: readonly Link[];
   cta: Link & { external?: boolean };
 };
 
-/**
- * The bar on both sides: the mark (home), the Professional / Personal switch, this page's sections,
- * and one call to action. On a phone the sections fold into a menu that also lists Home and the other side.
- */
-export function SiteBar({ name, sides, current, sections, cta }: SiteBarProps) {
+/** The mark and the Home link. Home is the only way out of a page: the two sides never link to each other. */
+export function BarHome({ name }: { name: string }) {
+  return (
+    <div className="bar-left">
+      {/* The mark also goes home; the Home link next to it is the one announced and tabbed to. */}
+      <a className="bar-id" href="/" aria-hidden="true" tabIndex={-1}>
+        <span className="bar-mark">SB</span>
+        <span className="bar-name">{name}</span>
+      </a>
+      <a className="bar-home" href="/" data-side-link>
+        <ArrowLeft size={13} /> Home
+      </a>
+    </div>
+  );
+}
+
+/** The bar on a side: the way home, this page's sections, and one call to action. On a phone the sections fold into a menu. */
+export function SiteBar({ name, sections, cta }: SiteBarProps) {
   const navId = useId();
   const [open, setOpen] = useState(false);
   const [onScreen, setOnScreen] = useState<string | null>(null);
-  const across = sides[current === 0 ? 1 : 0];
 
   useEffect(() => {
     const targets = [...document.querySelectorAll<HTMLElement>("[data-spy]")];
@@ -49,42 +57,21 @@ export function SiteBar({ name, sides, current, sections, cta }: SiteBarProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const close = () => setOpen(false);
-
   return (
     <header className="bar" data-open={open}>
-      <div className="bar-left">
-        <a className="bar-id" href="/" data-side-link aria-label={`${name}: home, choose Professional or Personal`}>
-          <span className="bar-mark">SB</span>
-          <span className="bar-name">{name}</span>
-        </a>
-        <nav className="switch" aria-label="Sides">
-          {sides.map((side, index) =>
-            index === current ? (
-              <a href={side.href} aria-current="page" key={side.href}>
-                {side.label}
-              </a>
-            ) : (
-              <a href={side.href} data-side-link key={side.href}>
-                {side.label}
-              </a>
-            ),
-          )}
-        </nav>
-      </div>
+      <BarHome name={name} />
 
       <nav className="bar-nav" id={navId} aria-label="On this page">
         {sections.map((section) => (
-          <a href={section.href} key={section.href} aria-current={onScreen === section.href ? "true" : undefined} onClick={close}>
+          <a
+            href={section.href}
+            key={section.href}
+            aria-current={onScreen === section.href ? "true" : undefined}
+            onClick={() => setOpen(false)}
+          >
             {section.label}
           </a>
         ))}
-        <a className="bar-nav-more" href="/">
-          <ArrowLeft size={14} /> Home
-        </a>
-        <a className="bar-nav-more" href={across.href}>
-          {across.label} <ArrowRight size={14} />
-        </a>
       </nav>
 
       <a className="bar-cta" href={cta.href} rel={cta.external ? "noreferrer" : undefined}>

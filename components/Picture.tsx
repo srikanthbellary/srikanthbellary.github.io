@@ -42,7 +42,7 @@ export function Thumb({ base, className }: { base: string; className?: string })
   );
 }
 
-// The portrait. Professional side only: the brief keeps the face off the films and music.
+// The portrait. Professional page only: the brief keeps the face off the films and music.
 export function Portrait({ sizes, eager = false }: { sizes: string; eager?: boolean }) {
   return (
     <picture>

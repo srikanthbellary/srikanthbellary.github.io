@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { PlainBar } from "@/components/Plain";
 import { person } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
-import { sides } from "@/lib/sides";
 
 export const metadata: Metadata = pageMetadata("missing");
 
@@ -18,9 +17,7 @@ export default function NotFound() {
           </p>
           <h1 id="missing">Page not found</h1>
           <p className="legal-lede">
-            That address is not on this site. <a href="/">Return home</a>, or go straight to{" "}
-            <a href={sides.professional.href}>{sides.professional.label}</a> or{" "}
-            <a href={sides.personal.href}>{sides.personal.label}</a>.
+            That address is not on this site. <a href="/">Return home</a>.
           </p>
         </section>
       </main>

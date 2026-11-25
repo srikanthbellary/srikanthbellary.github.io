@@ -3,27 +3,27 @@ import {
   career,
   education,
   lanes,
-  mediaStack,
   person,
   positioning,
   projects,
   stackGroups,
   type CareerChapter,
 } from "@/lib/content";
-import { sides } from "@/lib/sides";
 import { BlueprintBackdrop } from "./Backdrops";
 import { AskCard } from "./Chat";
 import { CareerPlate } from "./figures/CareerPlate";
 import { IncidentPlate, MappingPlate } from "./figures/Plates";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Plus } from "./icons";
+import { ArrowDown, ArrowUpRight, Plus } from "./icons";
 import { Portrait } from "./Picture";
+
+// The Professional page: the IT and AI engineering work, and nothing else.
+// It links home and never to the other page, and it does not mention that page's content.
 
 const pad = (n: number) => String(n).padStart(2, "0");
 const viaLine = (chapter: CareerChapter) =>
   [chapter.via ? `via ${chapter.via}` : "", chapter.city ?? ""].filter(Boolean).join(" · ");
 
 const [verizon, circana, thermo, cvs] = career;
-const personal = sides.personal;
 
 function SectionHead({ n, id, title, children }: { n: string; id: string; title: React.ReactNode; children: React.ReactNode }) {
   return (
@@ -57,9 +57,6 @@ export function ProfessionalHero() {
   return (
     <section className="hero hero-pro" id="intro" aria-label="Introduction">
       <p className="id-meta">
-        <a className="back" href="/" data-side-link>
-          <ArrowLeft size={13} /> Home
-        </a>
         <span>Profile · {new Date().getFullYear()}</span>
         <span>{person.location}</span>
         <span>
@@ -85,12 +82,6 @@ export function ProfessionalHero() {
       <div className="id-about">
         <p>
           {positioning.overview} {positioning.home}
-        </p>
-        <p>
-          {positioning.bridge}{" "}
-          <a className="inline-link" href={personal.href} data-side-link>
-            Films &amp; Music <ArrowRight size={13} />
-          </a>
         </p>
         <ul className="chips">
           <li>{person.years} years</li>
@@ -366,8 +357,6 @@ export function Work() {
 /* —— Stack —— */
 
 export function Stack() {
-  const groups = [stackGroups[0], mediaStack, ...stackGroups.slice(1)];
-
   return (
     <section className="sec stack" id="stack" data-spy>
       <SectionHead
@@ -380,17 +369,12 @@ export function Stack() {
         }
       >
         <p className="lead">A compact stack.</p>
-        <p>
-          The engineering stack, and the generative media practice behind the{" "}
-          <a className="inline-link" href={personal.href} data-side-link>
-            films and music <ArrowRight size={13} />
-          </a>
-        </p>
+        <p>The stack used on the work above. It is not a complete inventory.</p>
       </SectionHead>
 
       <dl className="groups" data-reveal>
-        {groups.map((group) => (
-          <div className={group.id === "media" ? "group group-media" : "group"} key={group.id}>
+        {stackGroups.map((group) => (
+          <div className="group" key={group.id}>
             <dt>{group.title}</dt>
             <dd>
               {group.items.map((item) => (

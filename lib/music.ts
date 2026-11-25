@@ -1,4 +1,7 @@
-// Films & Music: the Personal side.
+// Films & Music: the Personal page.
+//
+// The Personal page and the Professional page are strictly separate. Nothing in this file names the
+// other page or its content, and nothing here is imported by it.
 //
 // Everything here comes from Srikanth's brief of Nov 24, 2026 ("Website Brief: Music & Film") and the
 // asset delivery of the same day. Rules from that brief that this file has to keep:
@@ -53,7 +56,10 @@ export const banner = art("storm/banner", [800, 1280, 2000], 2000, 857);
 
 export const artist = {
   name: "Srikanth Bellary",
-  bio: "Engineer by day, storyteller always: Srikanth Bellary writes cinematic songs in Telugu and Hindi and turns them into music videos.",
+  roles: ["Recording artist", "Filmmaker"],
+  // The brief's one-line bio opens with "Engineer by day, storyteller always:". That half points at the
+  // other page, so it is left off here; the rest is the brief's sentence, word for word.
+  bio: "Srikanth Bellary writes cinematic songs in Telugu and Hindi and turns them into music videos.",
   story:
     "The albums are one connected story. A love that ended without an ending, told in Telugu, answered by her side of the story in Hindi, then a whole album in her voice.",
   madeWith:

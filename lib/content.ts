@@ -422,12 +422,9 @@ export const career: CareerChapter[] = [
 
 export const positioning = {
   roles: ["Applied AI Engineer", "AI Solutions Architect"],
-  also: ["Recording artist", "Filmmaker"],
-  // The bio line as it has always stood on this profile, then the two lines that link the engineer and the artist.
+  // The bio lines as they have always stood on this profile.
   overview: `I have spent ${person.years} years in production systems.`,
   home: "I live in Wellington, Florida.",
-  bridge:
-    "Engineer by day, storyteller always. I write cinematic songs in Telugu and Hindi and turn them into AI-generated music videos.",
 } as const;
 
 /* —— From the fact sheet behind "Ask about my work" (chat-api/prompt/context.md) —— */
@@ -466,13 +463,6 @@ export const stackGroups: StackGroup[] = [
     items: ["GxP / GAMP writing", "Hash-locked artifacts", "CI/CD", "Serving-layer RBAC", "Multi-cloud"],
   },
 ];
-
-// What the music and film brief says about how that work is made. It names no tools, so none are listed.
-export const mediaStack: StackGroup = {
-  id: "media",
-  title: "Generative media",
-  items: ["Songwriting in Telugu and Hindi", "AI music production", "AI-generated music video", "Short film"],
-};
 
 export const buildNotes = [
   {

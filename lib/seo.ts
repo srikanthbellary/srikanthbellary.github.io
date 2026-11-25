@@ -3,42 +3,73 @@ import { person } from "@/lib/content";
 
 export const siteUrl = person.site;
 
-export const ogImage = {
-  url: "/og.jpg",
-  width: 1200,
-  height: 630,
-  alt: "Srikanth Bellary. Two sides: Professional, applied AI engineering and architecture; Personal, films and music.",
-} as const;
+// Each page describes only itself: its own words, its own share image, its own structured data.
+// The two sides never name each other; only the home page offers both.
+
+const image = (file: string, alt: string) => ({ url: `/${file}`, width: 1200, height: 630, alt });
+
+const homeImage = image("og.jpg", "Srikanth Bellary");
+
+const professionalImage = image(
+  "og-professional.jpg",
+  "Srikanth Bellary, Applied AI Engineer and AI Solutions Architect, Wellington, Florida",
+);
 
 export const pageCopy = {
   home: {
-    title: "Srikanth Bellary — Applied AI Engineer, AI Solutions Architect. Films & Music.",
-    description:
-      "Engineer by day, storyteller always. Two sides: Professional, the applied AI engineering and architecture work; Personal, the films and music. Wellington, FL.",
+    title: "Srikanth Bellary",
+    description: "Srikanth Bellary. Two pages: Professional and Personal.",
     path: "/",
+    image: homeImage,
+    keywords: ["Srikanth Bellary"],
   },
   professional: {
     title: "Professional — Applied AI Engineer and AI Solutions Architect",
     description:
       "Srikanth Bellary, Applied AI Engineer and AI Solutions Architect. Client projects newest first, the stack, OpenStinger, and how to write me. Wellington, FL.",
     path: "/professional/",
+    image: professionalImage,
+    keywords: [
+      "Srikanth Bellary",
+      "Applied AI Engineer",
+      "AI Solutions Architect",
+      "Gen AI",
+      "autonomous agents",
+      "RAG",
+      "Wellington FL",
+    ],
   },
   personal: {
     title: "Personal — Films & Music",
     description:
       "Srikanth Bellary writes cinematic songs in Telugu and Hindi and turns them into music videos. Inkaa Kadha Migilundhi, Abhi Kahani Baaki Hai, and three short films.",
     path: "/personal/",
+    image: image("og-personal.jpg", "Films & Music by Srikanth Bellary"),
+    keywords: [
+      "Srikanth Bellary",
+      "Inkaa Kadha Migilundhi",
+      "Abhi Kahani Baaki Hai",
+      "Telugu songs",
+      "Hindi songs",
+      "music video",
+      "short film",
+    ],
   },
+  // The privacy note is about the chat on the Professional page, so it shares that page's image.
   privacy: {
     title: "Privacy",
     description:
       "How srikanthbellary.com handles questions sent through Ask about my work. Wellington, FL. No street address.",
     path: "/privacy/",
+    image: professionalImage,
+    keywords: ["Srikanth Bellary", "privacy"],
   },
   missing: {
     title: "Page not found",
-    description: "That address is not on srikanthbellary.com. Return home and pick a side.",
+    description: "That address is not on srikanthbellary.com. Return home.",
     path: "/404",
+    image: homeImage,
+    keywords: ["Srikanth Bellary"],
   },
 } as const;
 
@@ -54,17 +85,22 @@ export function pageMetadata(
   return {
     title,
     description: page.description,
+    keywords: [...page.keywords],
     alternates: { canonical: url },
     openGraph: {
+      type: "website",
+      locale: "en_US",
+      siteName: person.name,
       title: page.title,
       description: page.description,
       url,
-      images: [ogImage],
+      images: [page.image],
     },
     twitter: {
+      card: "summary_large_image",
       title: page.title,
       description: page.description,
-      images: [ogImage.url],
+      images: [page.image.url],
     },
     ...extra,
   };
