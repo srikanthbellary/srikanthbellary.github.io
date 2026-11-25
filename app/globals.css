@@ -131,9 +131,14 @@ video {
   max-width: 100%;
 }
 
-/* A <picture> only chooses a file; its <img> takes part in the layout. */
+/* A <picture> only chooses a file; its <img> takes part in the layout, and its <source> elements
+   must not. Without the second rule each <source> becomes an empty cell in a grid or flex parent. */
 picture {
   display: contents;
+}
+
+picture > source {
+  display: none;
 }
 
 ::selection {
