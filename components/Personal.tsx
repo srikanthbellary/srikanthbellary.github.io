@@ -2,9 +2,9 @@ import { person } from "@/lib/content";
 import {
   albums,
   albumsNewestFirst,
-  artist,
   featuredVideo,
   films,
+  maker,
   nextVideo,
   pending,
   shorts,
@@ -20,9 +20,10 @@ import { Countdown } from "./Motion";
 import { Picture } from "./Picture";
 import { LiteYouTube, TheaterButton } from "./Video";
 
-// The Personal page: Films & Music, and nothing else.
+// The Personal page: Films & Music, made with AI, and nothing else.
 // It links home and never to the other page, and it does not mention that page's content.
 // From lib/content.ts it takes only the name and the location.
+// How he is described and credited is fixed in lib/music.ts (see the rules at the top of that file).
 
 function Labels({ items }: { items: readonly string[] }) {
   return (
@@ -66,23 +67,21 @@ export function PersonalHero() {
             Films <em>&amp;</em> Music
           </h1>
           <p className="id-roles">
-            <span>{artist.roles[0]}</span>
-            <i aria-hidden="true" />
-            <span>{artist.roles[1]}</span>
+            <span>{maker.mark}</span>
           </p>
         </div>
       </div>
 
       <div className="id-about">
-        <p>{artist.bio}</p>
+        <p>{maker.intro}</p>
         <ul className="platforms">
           <li>
-            <a className="btn btn-ghost" href={artist.spotify} rel="noreferrer">
+            <a className="btn btn-ghost" href={maker.spotify} rel="noreferrer">
               Spotify <ArrowUpRight size={14} />
             </a>
           </li>
           <li>
-            <a className="btn btn-ghost" href={artist.appleMusic} rel="noreferrer">
+            <a className="btn btn-ghost" href={maker.appleMusic} rel="noreferrer">
               Apple Music <ArrowUpRight size={14} />
             </a>
           </li>
@@ -157,7 +156,7 @@ export function PersonalHero() {
           <span className="rail-n">Film</span>
           <b>Short films</b>
           <i>
-            {films[0].year} · {films[0].role}
+            {films[0].year} · {maker.mark}
           </i>
           <span className="rail-posters">
             {films.map((film) => (
@@ -173,7 +172,7 @@ export function PersonalHero() {
 /* —— The albums —— */
 
 function AlbumCard({ album }: { album: Album }) {
-  const stores = artist.releaseDayStores;
+  const stores = maker.releaseDayStores;
   const preSave = pending.preSave[album.id];
 
   return (
@@ -183,13 +182,18 @@ function AlbumCard({ album }: { album: Album }) {
         <p className="album-out">{album.out}</p>
       </div>
 
-      <AlbumTracks album={album}>
+      <AlbumTracks album={album} note={maker.mark}>
         <Labels items={[`Album ${album.chapter}`, album.language, album.date]} />
         <h3>{album.title}</h3>
         <p className="album-meaning">“{album.meaning}.”</p>
         <p className="album-line">
           {album.short}
           {album.detail ? <span> {album.detail}</span> : null}
+        </p>
+        <p className="credit">
+          <b>{maker.mark}</b>
+          <span>{maker.name}</span>
+          <i>{maker.musicCredit}</i>
         </p>
 
         <div className="listen">
@@ -219,7 +223,8 @@ export function Music() {
           </>
         }
       >
-        <p className="lead">{artist.story}</p>
+        <p className="lead">{maker.story}</p>
+        <p>{maker.credits}</p>
       </SectionHead>
 
       <ol className="arc" data-reveal>
@@ -275,7 +280,7 @@ export function FeaturedVideo() {
             />
           </LiteYouTube>
           <div className="feature-cap">
-            <Labels items={["Featured video", featuredVideo.kind]} />
+            <Labels items={["Featured video", featuredVideo.kind, maker.mark]} />
             <h3>{featuredVideo.title}</h3>
             <a className="text-link" href={youtube.watch(featuredVideo.id)} rel="noreferrer">
               Watch on YouTube <ArrowUpRight size={14} />
@@ -285,7 +290,7 @@ export function FeaturedVideo() {
 
         <aside className="feature-side">
           <p className="label">How it is made</p>
-          <p className="made">{artist.madeWith}</p>
+          <p className="made">{maker.madeWith}</p>
           {pending.hindiVideoId ? (
             <LiteYouTube id={pending.hindiVideoId} title={`${nextVideo.title}: ${nextVideo.kind.toLowerCase()}`} play={<Play size={24} />}>
               <Picture art={albums[1].cover} sizes="(max-width: 900px) 92vw, 26vw" alt={`${nextVideo.title}: video still`} />
@@ -361,7 +366,7 @@ export function Films() {
           </>
         }
       >
-        <p className="lead">Three shorts from {films[0].year}.</p>
+        <p className="lead">Three short films from {films[0].year}, made with AI.</p>
         <p>
           Press play to watch here, or open them on YouTube. Nothing loads from YouTube until you press play.
         </p>
@@ -373,8 +378,9 @@ export function Films() {
             <LiteYouTube id={film.id} title={film.title} play={<Play size={24} />}>
               <Picture art={film.poster} sizes="(max-width: 900px) 92vw, 30vw" alt={`${film.title}: video still`} />
             </LiteYouTube>
-            <Labels items={[film.year, film.length, film.role]} />
+            <Labels items={[film.year, film.length, maker.mark]} />
             <h4>{film.title}</h4>
+            <p className="film-credit">{maker.filmCredit}</p>
             <p className="film-logline">{film.logline}</p>
             <a className="text-link" href={youtube.watch(film.id)} rel="noreferrer">
               Watch on YouTube <ArrowUpRight size={14} />

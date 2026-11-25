@@ -3,10 +3,17 @@
 // The Personal page and the Professional page are strictly separate. Nothing in this file names the
 // other page or its content, and nothing here is imported by it.
 //
-// Everything here comes from Srikanth's brief of Nov 24, 2026 ("Website Brief: Music & Film") and the
-// asset delivery of the same day. Rules from that brief that this file has to keep:
+// The content comes from Srikanth's brief of Nov 24, 2026 ("Website Brief: Music & Film") and the
+// asset delivery of the same day. How he is described comes from his correction of Nov 25, 2026,
+// which replaces the brief on that point:
+//   - he is a technologist who makes films and music with AI in his personal time. He is never called
+//     an artist, recording artist, singer, musician, filmmaker or director, on the page or in its metadata
+//   - his credit on the music is "Music Producer, Programmer and Lyricist", as he lists it on Spotify
+//   - his credit on the short films is "Created by Srikanth Bellary", never "directed" or "generated"
+//   - the albums, track lists, videos and films are marked "Made with AI"
+// Rules from the brief that still hold:
 //   - titles exactly as spelled here: romanized Telugu and Hindi, English letters only
-//   - Srikanth Bellary is the artist on everything; Nikhil Yadav is credited as lyricist on "Teri Baatein" only
+//   - Nikhil Yadav is credited as lyricist on "Teri Baatein" only
 //   - no other artists or songs are named anywhere, including alt text
 //   - no lyrics
 //   - Her Mood Swings is shown as "Coming 2027" only: no tracklist, audio or titles
@@ -52,18 +59,26 @@ const art = (base: string, widths: readonly number[], width: number, height: num
 
 export const banner = art("storm/banner", [800, 1280, 2000], 2000, 857);
 
-/* —— The artist —— */
+/* —— Who makes this, and how he is credited —— */
 
-export const artist = {
+// Exact words, both of them. The music credit is the one he lists on Spotify.
+const musicCredit = "Music Producer, Programmer and Lyricist";
+const filmCredit = "Created by Srikanth Bellary";
+
+export const maker = {
   name: "Srikanth Bellary",
-  roles: ["Recording artist", "Filmmaker"],
-  // The brief's one-line bio opens with "Engineer by day, storyteller always:". That half points at the
-  // other page, so it is left off here; the rest is the brief's sentence, word for word.
-  bio: "Srikanth Bellary writes cinematic songs in Telugu and Hindi and turns them into music videos.",
+  // Shown under the heading and on every album, track list, video and film.
+  mark: "Made with AI",
+  // The introduction, in his voice. It says "at work" and nothing more about the other page.
+  intro:
+    "I am a technologist who loves music and film. In my personal time, outside enterprise use cases, I use the AI skills I learned at work to make films and music. All of it is made with AI, with respect for the artists who bring a human touch to both.",
+  musicCredit,
+  filmCredit,
+  credits: `Both albums are made with AI. I am credited on them as ${musicCredit}.`,
   story:
     "The albums are one connected story. A love that ended without an ending, told in Telugu, answered by her side of the story in Hindi, then a whole album in her voice.",
   madeWith:
-    "Songs written by Srikanth and produced with AI music tools. The music videos are AI-generated, with Srikanth himself as the on-screen subject.",
+    "The songs are produced with AI music tools. The music videos are made with AI, with me as the on-screen subject.",
   spotify: "https://open.spotify.com/artist/12F3zpzFJ7BmmNTMiIDfwQ",
   appleMusic: "https://music.apple.com/us/artist/srikanth-bellary/6836423172",
   // Album links arrive on release day. Until then each album card names the stores.
@@ -238,7 +253,8 @@ export const shorts: Short[] = pending.shortsUseLoops
       kind: "vertical Short",
     }));
 
-/* —— Film —— */
+/* —— Film ——
+   Every film carries the same credit: maker.filmCredit. */
 
 export const films = [
   {
@@ -247,7 +263,6 @@ export const films = [
     title: "Apocalyptic Roulette",
     year: "2024",
     length: "4:07",
-    role: "Producer",
     logline:
       "What if every catastrophe struck at once, one after another, like a casino where every odd is stacked against us?",
   },
@@ -257,7 +272,6 @@ export const films = [
     title: "No Planet for Humans",
     year: "2024",
     length: "2:02",
-    role: "Producer",
     logline: "When the singularity arrives and AI takes over, humans are left living like animals under its rule.",
   },
   {
@@ -266,7 +280,6 @@ export const films = [
     title: "Arcane Legacy",
     year: "2024",
     length: "1:30",
-    role: "Producer",
     logline:
       "A medieval king glimpses the future, world wars and atomic bombs, in a crystal ball, goes mad, and wages war on every kingdom around him.",
   },

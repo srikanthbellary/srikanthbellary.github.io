@@ -1067,6 +1067,31 @@ picture > source {
   color: var(--muted);
 }
 
+/* How an album is credited: the mark, his name, and the credit in the words he uses. */
+.credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 18px;
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+.credit b {
+  padding: 4px 8px 5px;
+  border: 1px solid var(--ember);
+  font: 700 10.5px/1.2 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.credit i {
+  font-style: normal;
+  color: var(--muted);
+}
+
 .listen {
   display: flex;
   flex-wrap: wrap;
@@ -1487,6 +1512,12 @@ picture > source {
   margin-top: 10px;
   font: 800 clamp(2.2rem, 3.5vw, 3.2rem)/0.9 var(--display);
   text-transform: uppercase;
+}
+
+.film-credit {
+  margin-top: 8px;
+  font-size: 14.5px;
+  color: var(--soft);
 }
 
 .film-logline {
@@ -3549,6 +3580,33 @@ html:has(.home) body {
 @media (max-width: 900px) {
   .id-plain .id-name h1 {
     grid-column: 1 / -1;
+  }
+
+  /* Films & Music: the introduction sits right under the heading, before the first screen.
+     The links to the music services stay where they were, after it. */
+  .hero-per {
+    grid-template-areas:
+      "meta"
+      "id"
+      "intro"
+      "screen"
+      "rail"
+      "about";
+  }
+
+  .hero-per .id-about {
+    display: contents;
+  }
+
+  .hero-per .id-about p {
+    grid-area: intro;
+    padding: 0 var(--gutter) 22px;
+  }
+
+  .hero-per .id-about .platforms {
+    grid-area: about;
+    margin-top: 0;
+    padding: 24px var(--gutter) 4px;
   }
 
   .screen-pro {
