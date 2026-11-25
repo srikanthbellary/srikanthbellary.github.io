@@ -39,20 +39,23 @@ export const pageCopy = {
       "Wellington FL",
     ],
   },
+  // He makes these with AI in his personal time. Nothing here calls him an artist or a director.
   personal: {
-    title: "Personal — Films & Music",
+    title: "Personal — Films & Music, made with AI",
     description:
-      "Srikanth Bellary writes cinematic songs in Telugu and Hindi and turns them into music videos. Inkaa Kadha Migilundhi, Abhi Kahani Baaki Hai, and three short films.",
+      "Films and music made with AI by Srikanth Bellary, a technologist who loves both. Two albums, Inkaa Kadha Migilundhi and Abhi Kahani Baaki Hai, and three short films.",
     path: "/personal/",
-    image: image("og-personal.jpg", "Films & Music by Srikanth Bellary"),
+    image: image("og-personal.jpg", "Films & Music, made with AI. Srikanth Bellary."),
     keywords: [
       "Srikanth Bellary",
+      "films and music made with AI",
+      "AI music",
+      "AI short films",
       "Inkaa Kadha Migilundhi",
       "Abhi Kahani Baaki Hai",
       "Telugu songs",
       "Hindi songs",
       "music video",
-      "short film",
     ],
   },
   // The privacy note is about the chat on the Professional page, so it shares that page's image.

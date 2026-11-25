@@ -6,13 +6,14 @@ Three pages, strictly separate:
 
 - **Home** (`/`): the name and two buttons, PROFESSIONAL and PERSONAL. Nothing else is on it, and it does not scroll.
 - **Professional** (`/professional/`): the IT and AI engineering work. A first-person resume with dates, client names and project detail: work, stack, experience, contact. It is not a capabilities brochure.
-- **Personal** (`/personal/`): Films & Music. The albums, the featured video, the Shorts strip, Coming 2027 and the short films.
+- **Personal** (`/personal/`): Films & Music, made with AI. The albums, the featured video, the Shorts strip, Coming 2027 and the short films.
 
 Rules that hold across the site:
 
 - Only a click on a Home button leads to a page. Home shows no previews, photos, lists or hints.
 - Neither page links to the other or mentions the other's content, in the page or in its metadata. The only way across is the Home link, then the other button.
 - The portrait is used on the Professional page only.
+- On the Personal page he is a technologist who makes films and music with AI in his personal time. His credit on the music is "Music Producer, Programmer and Lyricist" and on the short films "Created by Srikanth Bellary". He is never called an artist, singer, musician, filmmaker or director, on the page or in its metadata. The full rules are at the top of `lib/music.ts`.
 
 ## Screening Room
 
@@ -32,7 +33,7 @@ Display face: Sofia Sans Extra Condensed. Body: Instrument Sans. Labels: JetBrai
 ## Content
 
 - `lib/content.ts`: the professional record. The chat fact sheet in `chat-api/prompt/context.md` mirrors it.
-- `lib/music.ts`: films and music, from the brief of Nov 24, 2026. The rules of that brief are listed at the top of the file.
+- `lib/music.ts`: films and music, from the brief of Nov 24, 2026 and his correction of Nov 25. The rules are listed at the top of the file.
 - `lib/seo.ts`: titles, descriptions and share images, one set per page.
 
 Open points are single values in `pending` at the top of `lib/music.ts`: the YouTube channel URL, the Hindi music video, the pre-save links, and whether the Shorts strip plays the Shorts or the silent loops.

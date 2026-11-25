@@ -6,7 +6,7 @@ import { SiteBar } from "@/components/SiteBar";
 import { SiteFoot } from "@/components/SiteFoot";
 import { Theater } from "@/components/Video";
 import { person } from "@/lib/content";
-import { artist } from "@/lib/music";
+import { maker } from "@/lib/music";
 import { pageCopy, pageMetadata, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata("personal");
@@ -19,17 +19,17 @@ const sections = [
   { href: "#film", label: "Short films" },
 ] as const;
 
+// No job title here: he makes these in his personal time, and the description says how.
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: artist.name,
-  jobTitle: artist.roles,
-  description: artist.bio,
+  name: maker.name,
+  description: pageCopy.personal.description,
   url: new URL(pageCopy.personal.path, siteUrl).toString(),
-  sameAs: [artist.spotify, artist.appleMusic],
+  sameAs: [maker.spotify, maker.appleMusic],
 };
 
-// Films & Music, and nothing else. This page links home, never to the other side.
+// Films & Music, made with AI, and nothing else. This page links home, never to the other side.
 // The portrait is not used here: music, not face.
 export default function PersonalPage() {
   return (
@@ -38,7 +38,7 @@ export default function PersonalPage() {
       <a className="skip" href="#music">
         Skip to the albums
       </a>
-      <SiteBar name={person.name} sections={sections} cta={{ href: artist.spotify, label: "Listen", external: true }} />
+      <SiteBar name={person.name} sections={sections} cta={{ href: maker.spotify, label: "Listen", external: true }} />
       <main id="top">
         <PersonalHero />
         <Music />

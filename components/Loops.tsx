@@ -19,7 +19,7 @@ function start(video: HTMLVideoElement | null) {
  * The tracklist of an album and the loop beside it. The loop follows the track under the pointer
  * (or the one focused or tapped) and plays only while it is on screen.
  */
-export function AlbumTracks({ album, children }: { album: Album; children: ReactNode }) {
+export function AlbumTracks({ album, note, children }: { album: Album; note: string; children: ReactNode }) {
   const [index, setIndex] = useState(0);
   const video = useRef<HTMLVideoElement>(null);
   const visible = useRef(false);
@@ -56,7 +56,9 @@ export function AlbumTracks({ album, children }: { album: Album; children: React
         <details className="tracks" open>
           <summary>
             <span>Tracklist</span>
-            <span>{album.countWord}</span>
+            <span>
+              {album.countWord} · {note}
+            </span>
           </summary>
           <ol>
             {album.tracks.map((item, i) => (
