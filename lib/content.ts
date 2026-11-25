@@ -417,3 +417,80 @@ export const career: CareerChapter[] = [
     plateKicker: "Fig. UIA — Early ETL",
   },
 ];
+
+/* —— Positioning —— */
+
+export const positioning = {
+  roles: ["Applied AI Engineer", "AI Solutions Architect"],
+  also: ["Recording artist", "Filmmaker"],
+  // The bio line as it has always stood on this profile, then the two lines that link the engineer and the artist.
+  overview: `I have spent ${person.years} years in production systems.`,
+  home: "I live in Wellington, Florida.",
+  bridge:
+    "Engineer by day, storyteller always. I write cinematic songs in Telugu and Hindi and turn them into AI-generated music videos.",
+} as const;
+
+/* —— From the fact sheet behind "Ask about my work" (chat-api/prompt/context.md) —— */
+
+export const education = [
+  { label: "MS Software Engineering", year: "2009" },
+  { label: "BTech Mechanical", year: "2007" },
+] as const;
+
+export type StackGroup = { id: string; title: string; items: readonly string[] };
+
+export const stackGroups: StackGroup[] = [
+  {
+    id: "agents",
+    title: "GenAI and agents",
+    items: [
+      "Workflow-specific harnesses",
+      "Multi-agent systems",
+      "RAG",
+      "GraphRAG",
+      "MCP",
+      "In-network model gateways",
+      "Evaluation and refusal",
+    ],
+  },
+  { id: "languages", title: "Languages and data", items: ["Python", "SQL", "Scala", "Java / Spring", "Spark / PySpark", "PL/SQL"] },
+  { id: "cloud", title: "Cloud", items: ["AWS", "GCP (Vertex, BigQuery)", "Azure", "Snowflake"] },
+  { id: "platforms", title: "Data platforms", items: ["Hadoop", "Cloudera", "OpenSearch", "S3 data lakes", "Kafka"] },
+  { id: "graphs", title: "Graphs", items: ["Neo4j", "Amazon Neptune"] },
+  { id: "ml", title: "ML / documents", items: ["OCR", "NER", "NLP", "Spark ML"] },
+  { id: "interchange", title: "Healthcare interchange", items: ["EDI 837 / 835"] },
+  { id: "mainframe", title: "Mainframe-class data", items: ["VSAM / ISAM", "COBOL-to-SQL"] },
+  {
+    id: "quality",
+    title: "Quality and delivery",
+    items: ["GxP / GAMP writing", "Hash-locked artifacts", "CI/CD", "Serving-layer RBAC", "Multi-cloud"],
+  },
+];
+
+// What the music and film brief says about how that work is made. It names no tools, so none are listed.
+export const mediaStack: StackGroup = {
+  id: "media",
+  title: "Generative media",
+  items: ["Songwriting in Telugu and Hindi", "AI music production", "AI-generated music video", "Short film"],
+};
+
+export const buildNotes = [
+  {
+    id: "coding-agent",
+    value: "~1,100",
+    label: "lines · stdlib only",
+    line: "A coding agent I built is a single-file Python program, about 1,100 lines, standard library only.",
+  },
+  {
+    id: "rewrite",
+    value: "2.5 min",
+    label: "vs 7.5 hours by hand",
+    line: "A 12-step LLM pipeline rewrites a Java / Spring service in about 2.5 minutes against about 7.5 hours by hand.",
+  },
+  {
+    id: "estate",
+    value: "63 / 236 / 506",
+    label: "services · controllers · endpoints",
+    line: "AST inventory of a Java / Spring estate: 63 services, 236 controllers, 506 REST endpoints.",
+  },
+] as const;

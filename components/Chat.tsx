@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import { ArrowUpRight } from "./icons";
 
 type Role = "user" | "assistant";
 type Turn = { role: Role; content: string };
@@ -16,8 +17,31 @@ const DOWN = "The desk is quiet. Try again shortly, or write me.";
 const BUSY_NOTE = "A moment — I am still writing.";
 const PRIVACY_NOTE = "Questions you send are used to write a reply.";
 
+// The card in the Contact section asks the panel to open.
+const OPEN_EVENT = "chat:open";
+
 function lastTurns(turns: Turn[]): Turn[] {
   return turns.slice(-HISTORY_CAP);
+}
+
+/** In the Contact section: what the chat is for, and a button that opens it. */
+export function AskCard() {
+  return (
+    <div className="ask">
+      <p className="label">Ask about my work</p>
+      <p className="ask-note">{PREFACE}</p>
+      <button
+        className="btn btn-solid ask-open"
+        type="button"
+        onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
+      >
+        Ask a question <ArrowUpRight size={14} />
+      </button>
+      <p className="ask-privacy">
+        {PRIVACY_NOTE} <a href="/privacy/">Privacy</a>
+      </p>
+    </div>
+  );
 }
 
 export function Chat() {
@@ -31,6 +55,12 @@ export function Chat() {
   const logRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLTextAreaElement>(null);
   const connected = Boolean(API_URL.trim());
+
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener(OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_EVENT, onOpen);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
