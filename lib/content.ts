@@ -422,6 +422,8 @@ export const career: CareerChapter[] = [
 
 export const positioning = {
   roles: ["Applied AI Engineer", "AI Solutions Architect"],
+  // One line, the first thing under the name and roles: what he is working on now.
+  now: "Currently building agent harnesses and running swarms of autonomous agents.",
   // The bio lines as they have always stood on this profile.
   overview: `I have spent ${person.years} years in production systems.`,
   home: "I live in Wellington, Florida.",

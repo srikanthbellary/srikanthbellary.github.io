@@ -503,6 +503,13 @@ picture > source {
   background: var(--ember);
 }
 
+/* One line under the roles: what he is working on now. */
+.id-now {
+  margin-top: 12px;
+  font-size: 15.5px;
+  line-height: 1.4;
+}
+
 .id-about p {
   font-size: 15.5px;
   line-height: 1.5;
@@ -3580,6 +3587,12 @@ html:has(.home) body {
 @media (max-width: 900px) {
   .id-plain .id-name h1 {
     grid-column: 1 / -1;
+  }
+
+  /* Under the roles, across the portrait and the name. The grid's row gap sets the space above it. */
+  .id-now {
+    grid-column: 1 / -1;
+    margin-top: 0;
   }
 
   /* Films & Music: the introduction sits right under the heading, before the first screen.

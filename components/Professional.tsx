@@ -76,6 +76,7 @@ export function ProfessionalHero() {
           <p className="id-roles">
             <Dots items={positioning.roles} />
           </p>
+          <p className="id-now">{positioning.now}</p>
         </div>
       </div>
 
